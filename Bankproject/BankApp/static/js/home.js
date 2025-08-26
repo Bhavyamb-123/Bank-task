@@ -43,20 +43,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('#loginModal .auth-form');
     const signupForm = document.querySelector('#signupModal .auth-form');
     
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Add your login logic here
-            alert('Login functionality would be implemented here');
-        });
-    }
+    // if (loginForm) {
+    //     loginForm.addEventListener('submit', function(e) {
+    //         e.preventDefault();
+    //         // Add your login logic here
+    //         alert('Login functionality would be implemented here');
+    //     });
+    // }
     
-    if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Add your signup logic here
-            alert('Signup functionality would be implemented here');
-        });
-    }
+    // if (signupForm) {
+    //     signupForm.addEventListener('submit', function(e) {
+    //         e.preventDefault();
+    //         // Add your signup logic here
+    //         alert('Signup functionality would be implemented here');
+    //     });
+    // }
 });
 
