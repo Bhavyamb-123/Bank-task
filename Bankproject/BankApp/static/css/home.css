@@ -309,7 +309,7 @@ body {
 }
 
 /* Modal Styles */
-.modal {
+/* .modal {
     display: none;
     position: fixed;
     z-index: 2000;
@@ -357,10 +357,10 @@ body {
 
 .close:hover {
     color: #1e293b;
-}
+} */
 
 /* Form Styles */
-.auth-form {
+/* .auth-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -369,13 +369,13 @@ body {
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 10px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    
 }
 
 .form-group label {
@@ -434,6 +434,201 @@ body {
     text-align: center;
     font-size: 0.875rem;
     color: #64748b;
+} */
+
+/* Modal Overlay */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Dark background */
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 30px 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    position: relative;
+    animation: slideDown 0.4s ease;
+}
+
+/* Slide Down Animation */
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Modal Header */
+.modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.modal-header p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Close Button */
+.modal .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.modal .close:hover {
+    color: #000;
+}
+
+/* Form Styling */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form .form-group {
+    margin-bottom: 15px;
+}
+
+.auth-form label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border 0.2s ease;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+/* First and Last Name Row for Signup */
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Small text for PIN */
+.pin-input + small {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Checkbox & Options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+/* .form-options .checkbox-label input {
+    margin-right: 5px;
+} */
+/* .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+} */
+/* Buttons */
+.btn-full {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #11a6d4;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #000000;
+}
+
+/* Switch link */
+.auth-switch {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #555;
+}
+
+.auth-switch a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Terms & Privacy checkbox */
+.auth-form .form-group .checkbox-label a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.auth-form .form-group .checkbox-label a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive for small screens */
+@media (max-width: 500px) {
+    .form-row {
+        flex-direction: column;
+    }
 }
 
 /* Responsive Design */
