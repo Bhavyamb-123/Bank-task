@@ -26,8 +26,12 @@
                 </div>
                 
                 <div class="auth-buttons">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout' %}"><button class="btn-ghost" >Log Out</button></a>
+                    {% else %}
                     <button class="btn-ghost" onclick="openModal('login')">Log In</button>
                     <button class="btn-primary" onclick="openModal('signup')">Sign Up</button>
+                    {% endif %}
                 </div>
                 
                 <button class="mobile-menu-btn">☰</button>
@@ -135,14 +139,14 @@
                 <p>Sign in to your SecureBank account</p>
                 <span class="close" onclick="closeModal('login')">&times;</span>
             </div>
-            <form class="auth-form">
+            <form class="auth-form" action="{% url 'login' %}" method="post">{% csrf_token %}
                 <div class="form-group">
-                    <label for="loginEmail">Email Address</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    <label for="loginEmail"> Email Address</label>
+                    <input type="email" id="loginEmail"  placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    <input type="password" id="loginPassword"  placeholder="Enter your password" required>
                 </div>
                 <div class="form-options">
                     <label class="checkbox-label">
@@ -166,20 +170,24 @@
                 <p>Join SecureBank and start your financial journey</p>
                 <span class="close" onclick="closeModal('signup')">&times;</span>
             </div>
-            <form class="auth-form">
+            <form class="auth-form" action="{% url 'signup' %}" method="post">{% csrf_token %}
                 <div class="form-row">
                     <div class="form-group">
                         <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" placeholder="John" required>
+                        <input type="text" id="firstName" name="firstname" placeholder="John" required>
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" placeholder="Doe" required>
+                        <input type="text" id="lastName" name="lastname" placeholder="Doe" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="signupEmail">Email Address</label>
-                    <input type="email" id="signupEmail" placeholder="john@example.com" required>
+                    <input type="email" id="signupEmail" name="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phonenumber">Phone number</label>
+                    <input type="tel" id="number" name="number" placeholder="phone-no" required>
                 </div>
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
@@ -191,7 +199,7 @@
                 </div>
                 <div class="form-group">
                     <label for="pin">4-Digit PIN</label>
-                    <input type="password" id="pin" placeholder="Create a 4-digit PIN" maxlength="4" class="pin-input" required>
+                    <input type="password" id="pin" name="pin" placeholder="Create a 4-digit PIN" maxlength="4" class="pin-input" required>
                     <small>This PIN will be used for secure transactions</small>
                 </div>
                 <div class="form-group">
