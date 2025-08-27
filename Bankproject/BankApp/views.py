@@ -8,7 +8,11 @@ from .models import Profile
 
 # Home Page
 def homepage(request):
-    return render(request, 'home.html')
+    return render(request,'home.html')
+
+def openacc(request):
+    return render(request,'openacc.html') 
+
 users = User.objects.all()
 # for u in users:
 #     if u.username != "admin":
