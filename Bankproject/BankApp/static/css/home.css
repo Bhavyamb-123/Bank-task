@@ -623,7 +623,11 @@ body {
 .auth-form .form-group .checkbox-label a:hover {
     text-decoration: underline;
 }
-
+.username {
+    margin-right: 10px;
+    font-weight: 500;
+    color: #333;
+}
 /* Responsive for small screens */
 @media (max-width: 500px) {
     .form-row {
