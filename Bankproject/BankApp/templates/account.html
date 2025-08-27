@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Dashboard - SecureBank</title>
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1><a href="index.html">SecureBank</a></h1>
+            </div>
+            <div class="nav-links">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">About us</a>
+                    <a href="#" class="nav-link">Loans</a>
+                     <li><a href="account.html" class="nav-link">Account</a></li>
+                    <a href="#" class="nav-link">Support</a>
+                </div>
+                        <div class="auth-buttons">
+    {% if request.user.is_authenticated %}
+        <span class="username">Hi, {{ request.user.username }}</span>
+        <a href="{% url 'logout' %}">
+            <button class="btn-ghost">Log Out</button>
+        </a>
+    {% endif %}
+     </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="account-main">
+        <div class="container">
+            <!-- <div class="account-header">
+                <h1>Account Dashboard</h1>
+                <p>Welcome back, Joh.....</p>
+            </div> -->
+
+            <!-- <div class="account-grid"> -->
+                <!-- Account Balance -->
+                <!-- <div class="balance-card">
+                    <h2>Account Balance</h2>
+                    <div class="balance-amount">₹12,345.67</div>
+                    <div class="balance-info">
+                        <span class="account-number">Account: ****1234</span>
+                        <span class="last-updated">Last updated: Today, 2:30 PM</span>
+                    </div>
+                </div> -->
+
+                <!-- Monthly Summary -->
+                <!-- <div class="summary-cards">
+                    <div class="summary-card credit">
+                        <div class="summary-header">
+                            <h3>Total Credits</h3>
+                            <span class="arrow-up">↗</span>
+                        </div>
+                        <div class="summary-amount">₹5,750.00</div>
+                        <div class="summary-period">This month</div>
+                    </div>
+                    <div class="summary-card debit">
+                        <div class="summary-header">
+                            <h3>Total Debits</h3>
+                            <span class="arrow-down">↘</span>
+                        </div>
+                        <div class="summary-amount">₹3,425.69</div>
+                        <div class="summary-period">This month</div>
+                    </div>
+                </div> -->
+
+                <div class="account-header">
+    <h1>Account Dashboard</h1>
+    <p>Welcome back, {{ request.user.first_name }} {{ request.user.last_name }}</p>
+</div>
+
+<!-- Account Balance -->
+<div class="balance-card">
+    <h2>Account Balance</h2>
+    <div class="balance-amount">₹{{ account.balance }}</div>
+    <div class="balance-info">
+        <span class="account-number">Account: {{ account.account_number }}</span>
+        <span class="last-updated">Last updated: {{ account.last_updated }}</span>
+    </div>
+</div>
+
+<!-- Monthly Summary -->
+<div class="summary-cards">
+    <div class="summary-card credit">
+        <div class="summary-header">
+            <h3>Total Credits</h3>
+            <span class="arrow-up">↗</span>
+        </div>
+        <div class="summary-amount">₹{{ total_credits }}</div>
+        <div class="summary-period">This month</div>
+    </div>
+    <div class="summary-card debit">
+        <div class="summary-header">
+            <h3>Total Debits</h3>
+            <span class="arrow-down">↘</span>
+        </div>
+        <div class="summary-amount">₹{{ total_debits }}</div>
+        <div class="summary-period">This month</div>
+    </div>
+</div>
+
+<!-- Transactions -->
+<div class="transaction-history">
+    <div class="transaction-header">
+        <h2>Recent Transactions</h2>
+    </div>
+    <div class="transaction-list">
+        {% for tx in transactions %}
+            <div class="transaction-item">
+                <span>{{ tx.timestamp|date:"M d, Y H:i" }}</span> | 
+                <strong>{{ tx.transaction_type|title }}</strong> ₹{{ tx.amount }} - {{ tx.description }}
+            </div>
+        {% empty %}
+            <p>No recent transactions</p>
+        {% endfor %}
+    </div>
+</div>
+                
+
+                <!-- Transaction History -->
+                <div class="transaction-history">
+                    <div class="transaction-header">
+                        <h2>Recent Transactions</h2>
+                        <select class="filter-select">
+                            <option>All Transactions</option>
+                            <option>Credits Only</option>
+                            <option>Debits Only</option>
+                        </select>
+                    </div>
+                    <div class="transaction-list" id="transactionList">
+                        <!-- Transactions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>

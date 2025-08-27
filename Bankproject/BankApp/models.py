@@ -12,3 +12,27 @@ class Profile(models.Model):
     Pin=models.IntegerField(default=0,blank=True,null=True)
     def __str__(self):
         return self.user.firstname + "profile"
+    
+class Account(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+    account_number = models.CharField(max_length=20, unique=True)
+    balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def _str_(self):
+        return f"{self.user.username} - {self.account_number}"
+
+class Transaction(models.Model):
+    TRANSACTION_TYPES = [
+        ("credit", "Credit"),
+        ("debit", "Debit"),
+    ]
+
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="transactions")
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"{self.account.user.username} - {self.transaction_type} ₹{self.amount}"
