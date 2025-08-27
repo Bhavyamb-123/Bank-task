@@ -8,8 +8,8 @@ from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 def homepage(request):
     return render(request,'home.html')
-<<<<<<< HEAD
-=======
+def openacc(request):
+    return render(request,'openacc.html') 
 
 def signup(request):
     if request.method=="POST":
@@ -45,4 +45,4 @@ def userlogin(request):
 def userlogout(request):
     logout(request)
     return HttpResponseRedirect(reverse("homepage"))
->>>>>>> b765fde6881edb1815186bf9d8ef80923574da71
+
