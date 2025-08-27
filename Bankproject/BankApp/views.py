@@ -1,48 +1,79 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from.models import *
+from .models import*
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from django.contrib.auth import authenticate,login,logout
+from .models import Profile
 
-# Create your views here.
+# Home Page
 def homepage(request):
-    return render(request,'home.html')
-<<<<<<< HEAD
-=======
-
+    return render(request, 'home.html')
+users = User.objects.all()
+# for u in users:
+#     if u.username != "admin":
+#         u.delete()
+# Signup View
 def signup(request):
-    if request.method=="POST":
-        user=User.objects.create(username=request.POST.get("email"))
-        user.set_password(request.POST.get("password"))
+    msg = ""
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        print("------------",password)
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
+        number = request.POST.get("number")
+        pin = request.POST.get("pin")
+
+        # Check if user already exists
+        if User.objects.filter(username=email).exists():
+            msg = "User with this email already exists."
+            return render(request, 'home.html', {'msg': msg})
+
+        # Create User
+        user = User.objects.create(username=email, email=email, password=password)
+        user.set_password(password)
+        user.first_name = firstname
+        user.last_name = lastname
         user.save()
+
+        # Create Profile
         Profile.objects.create(
             user=user,
-            Firstname=request.POST.get("firstname"),
-            Lastname=request.POST.get("lastname"),
-            Email=request.POST.get("email"),
-            Phonenumber=request.POST.get("number"),
-            Pin=request.POST.get("pin"),
-            )
-        return HttpResponseRedirect(reverse("homepage"))
+            Firstname=firstname,
+            Lastname=lastname,
+            Email=email,
+            Phonenumber=number,
+            Pin=pin,
+        )
 
+        # Automatically log in the user
+        login(request, user)
+        return redirect("homepage")
+
+    return render(request, 'home.html', {'msg': msg})
+
+# Login View
 def userlogin(request):
-    msg=""
-    if request.method=="POST":
-        username = request.POST.get('email')
+    msg = ""
+    if request.method == "POST":
+        email = request.POST.get('email')
         password = request.POST.get('password')
-        user=authenticate(username=username,password=password)  #for authentication .value will be true or false
-        if user:
-            login(request,user)
-            print("login successful")
-            return HttpResponseRedirect(reverse("homepage"))
+        print(email,password)
+        # Authenticate user
+        user = authenticate(username=email, password=password)
+        print(user)
+        if user is not None:
+            print("----------------")
+            login(request, user)
+            return HttpResponseRedirect(reverse('homepage'))
         else:
-            print("No such user found")
-            msg="invalid login credentials"
-        print(username,password)
-    return render(request,'home.html',{'msg':msg})
+            msg = "Invalid login credentials"
+    
 
+    return HttpResponseRedirect(reverse('homepage'))
+
+# Logout View
 def userlogout(request):
     logout(request)
     return HttpResponseRedirect(reverse("homepage"))
->>>>>>> b765fde6881edb1815186bf9d8ef80923574da71
