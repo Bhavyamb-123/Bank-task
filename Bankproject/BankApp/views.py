@@ -82,3 +82,31 @@ def userlogout(request):
     logout(request)
     return HttpResponseRedirect(reverse("homepage"))
 
+
+#account section
+
+def account_dashboard(request):
+    try:
+        account = Account.objects.get(user=request.user)
+    except Account.DoesNotExist:
+        # Create account if it doesn’t exist
+        account = Account.objects.create(
+            user=request.user,
+            account_number="**" + str(request.user.id).zfill(4),
+            balance=0.00
+        )
+
+    # Recent transactions
+    transactions = account.transactions.order_by("-timestamp")[:5]
+
+    # Summary
+    total_credits = account.transactions.filter(transaction_type="credit").aggregate(total=models.Sum("amount"))["total"] or 0
+    total_debits = account.transactions.filter(transaction_type="debit").aggregate(total=models.Sum("amount"))["total"] or 0
+
+    context = {
+        "account": account,
+        "transactions": transactions,
+        "total_credits": total_credits,
+        "total_debits": total_debits,
+    }
+    return render(request, "account.html", context)
