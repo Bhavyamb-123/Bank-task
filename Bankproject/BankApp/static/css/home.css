@@ -63,6 +63,11 @@ body {
     color: #2563eb;
 }
 
+a{
+  text-decoration: none ;
+  color: #000;
+}
+
 .auth-buttons {
     display: flex;
     gap: 1rem;
