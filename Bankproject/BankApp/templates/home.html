@@ -21,7 +21,7 @@
                     <a href="#" class="nav-link">Home</a>
                     <a href="#" class="nav-link">About us</a>
                     <a href="#" class="nav-link">Loans</a>
-                     <li><a href="{% url 'account_dashboard' %}">class="nav-link">Account</a></li>
+                    <a href="{% url 'account_dashboard' %}"class="nav-link">Account</a>
                     <a href="#" class="nav-link">Support</a>
                 </div>
                 
@@ -159,9 +159,14 @@
                     <input type="password" id="loginPassword"  placeholder="Enter your password" required name="password"> 
                 </div>
                 <div class="form-options">
-                    <label class="checkbox-label">
+                    <!-- <label class="checkbox-label">
                         <input type="checkbox"> Remember me
-                    </label>
+                    </label> -->
+
+                    <label class="checkbox-label" style="display: flex;">
+                         <input type="checkbox" required style="width: 50px; display: flex;justify-content: flex-start;align-items: flex-start;text-align: left;">
+                             Remember me
+                        </label>
                     <a href="#" class="forgot-link">Forgot password?</a>
                 </div>
                 <button type="submit" class="btn-primary btn-full">Sign In</button>
@@ -213,9 +218,9 @@
                     <small>This PIN will be used for secure transactions</small>
                 </div>
                 <div class="form-group">
-                    <label class="checkbox-label" >
-                         
-                        <a href="#" style="display: flex;justify-content: flex-start;align-items: flex-start;text-align: left;"><input type="checkbox" required style="width: 50px;"> I agree to the Terms of Service and Privacy Policy</a>
+                    <label class="checkbox-label" style="display: flex;">
+                         <input type="checkbox" required style="width: 50px;">
+                        <a href="#" style="display: flex;justify-content: flex-start;align-items: flex-start;text-align: left;"> I agree to the Terms of Service and Privacy Policy</a>
                     </label>
                 </div>
                 <button type="submit" class="btn-success btn-full">Create Account</button>
