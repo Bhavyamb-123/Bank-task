@@ -197,13 +197,15 @@ a{
 
 /* Header */
 .account-header {
-    margin-bottom: 25px;
+    margin-bottom: 3%;
+    margin-top: 10%;
 }
 
 .account-header h1 {
     font-size: 1.8rem;
     font-weight: 700;
-    margin-bottom: 6px;
+    
+    margin-bottom: 2px;
 }
 
 .account-header p {
@@ -386,4 +388,110 @@ a{
 .load-more button:hover {
     background: #1e40af;
     color: #fff;
+}
+
+
+/* Money Transfer Section */
+.money-transfer {
+    background: #fff;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.money-transfer h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.transfer-form .form-group {
+    margin-bottom: 15px;
+}
+
+.transfer-form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.transfer-form input {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transfer-form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.transfer-form .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    width: 100%;
+}
+
+.transfer-form .btn-primary:hover {
+    background: #1e40af;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .money-transfer {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .money-transfer h2 {
+        font-size: 18px;
+    }
+
+    .transfer-form input,
+    .transfer-form .btn-primary {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .money-transfer {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .money-transfer h2 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .transfer-form label {
+        font-size: 13px;
+    }
+
+    .transfer-form input,
+    .transfer-form .btn-primary {
+        font-size: 13px;
+        padding: 10px;
+    }
 }

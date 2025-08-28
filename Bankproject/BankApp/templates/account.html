@@ -112,21 +112,30 @@
         <div class="summary-amount">₹{{ total_credits }}</div>
         <div class="summary-period">This month</div>
     </div>
-    <div class="summary-card debit">
-        <div class="summary-header">
-            <h3>Total Debits</h3>
-            <span class="arrow-down">↘</span>
-        </div>
-        <div class="summary-amount">₹{{ total_debits }}</div>
-        <div class="summary-period">This month</div>
+   <div class="summary-card debit">
+    <div class="summary-header">
+        <h3>Total Debits</h3>
+        <span class="arrow-down">↘</span>
     </div>
+    <div class="summary-amount">₹{{ total_debits }}</div>
+    <div class="summary-period">This month</div>
+</div>
 </div>
 
 <!-- Transactions -->
 <div class="transaction-history">
-    <div class="transaction-header">
+    <!-- <div class="transaction-header">
         <h2>Recent Transactions</h2>
-    </div>
+    </div> -->  <div class="transaction-header">
+                        <h2>Recent Transactions</h2>
+                        <select class="filter-select">
+                            <option>All Transactions</option>
+                            <option>Credits Only</option>
+                            <option>Debits Only</option>
+                        </select>
+                    </div>
+
+    
     <div class="transaction-list">
         {% for tx in transactions %}
             <div class="transaction-item">
@@ -138,10 +147,35 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- Money Transfer Section -->
+<div class="money-transfer">
+    <h2>💸 Transfer Money</h2>
+    <form method="POST" action="{% url 'transfer' %}" class="transfer-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="recipient_account">Recipient Account Number</label>
+            <input type="text" id="recipient_account" name="recipient_account" placeholder="Enter account number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Amount (₹)</label>
+            <input type="number" id="amount" name="amount" step="0.01" min="1" placeholder="Enter amount" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description (Optional)</label>
+            <input type="text" id="description" name="description" placeholder="e.g. Rent, Gift, Bills">
+        </div>
+
+        <button type="submit" class="btn-primary">Send Money</button>
+    </form>
+</div>
                 
 
                 <!-- Transaction History -->
-                <div class="transaction-history">
+                <!-- <div class="transaction-history">
                     <div class="transaction-header">
                         <h2>Recent Transactions</h2>
                         <select class="filter-select">
@@ -150,7 +184,7 @@
                             <option>Debits Only</option>
                         </select>
                     </div>
-                    <div class="transaction-list" id="transactionList">
+                    <div class="transaction-list" id="transactionList"> -->
                         <!-- Transactions will be populated by JavaScript -->
                     </div>
                 </div>

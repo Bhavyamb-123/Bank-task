@@ -36,3 +36,13 @@ class Transaction(models.Model):
 
     def _str_(self):
         return f"{self.account.user.username} - {self.transaction_type} ₹{self.amount}"
+    
+class MoneyTransfer(models.Model):
+    sender = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="sent_transfers")
+    recipient = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="received_transfers")
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"Transfer ₹{self.amount} from {self.sender.account_number} to {self.recipient.account_number}"
