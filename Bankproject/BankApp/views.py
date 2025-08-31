@@ -107,8 +107,8 @@ def account_dashboard(request):
         timestamp__gte=start_month
     ).aggregate(total=models.Sum("amount"))["total"] or 0
 
-    # Recent transactions (last 10)
-    transactions = Transaction.objects.filter(account=account).order_by("timestamp")[:10]
+    # Recent transactions (last 10)  👉 order_by("-timestamp") aakki latest first
+    transactions = Transaction.objects.filter(account=account).order_by("-timestamp")[:10]
 
     return render(request, "account.html", {
         "account": account,
@@ -133,40 +133,17 @@ def transfer(request):
             messages.error(request, "❌ Recipient account not found.")
             return redirect("account_dashboard")
 
-        # 🔹 Check balance
-        if sender_account.balance < amount:
-            messages.error(request, "❌ Insufficient balance.")
+        # 🔹 Save MoneyTransfer (models.py handle cheyyum balance + transactions)
+        try:
+            MoneyTransfer.objects.create(
+                sender=sender_account,
+                recipient=recipient_account,
+                amount=amount,
+                description=description
+            )
+        except ValueError as e:
+            messages.error(request, f"❌ {str(e)}")
             return redirect("account_dashboard")
-
-        # 🔹 Deduct from sender
-        sender_account.balance -= amount
-        sender_account.save()
-
-        # 🔹 Add to recipient
-        recipient_account.balance += amount
-        recipient_account.save()
-
-        # 🔹 Save MoneyTransfer record
-        MoneyTransfer.objects.create(
-            sender=sender_account,
-            recipient=recipient_account,
-            amount=amount,
-            description=description
-        )
-
-        # 🔹 Save Transactions
-        Transaction.objects.create(
-            account=sender_account,
-            transaction_type="debit",
-            amount=amount,
-            description=f"Transfer to {recipient_account.account_number} - {description}"
-        )
-        Transaction.objects.create(
-            account=recipient_account,
-            transaction_type="credit",
-            amount=amount,
-            description=f"Transfer from {sender_account.account_number} - {description}"
-        )
 
         messages.success(request, f"✅ ₹{amount} transferred successfully!")
         return redirect("account_dashboard")
