@@ -121,7 +121,9 @@
     <div class="summary-period">This month</div>
 </div>
 </div>
-
+{% for message in messages %}
+<h1>{{message}}</h1>
+{% endfor %}
 <!-- Transactions -->
 <div class="transaction-history">
     <!-- <div class="transaction-header">
@@ -172,6 +174,7 @@
         <button type="submit" class="btn-primary">Send Money</button>
     </form>
 </div>
+
                 
 
                 <!-- Transaction History -->
