@@ -8,6 +8,36 @@
     <link rel="stylesheet" href="{% static 'css/account.css' %}">
 </head>
 <body>
+    <!-- money transfer  -->
+<div id="transferModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closemoneyModal()">&times;</span>
+            <h2>💸 Transfer Money</h2>
+            <form method="POST" action="{% url 'transfer' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="recipient_account">Recipient Account Number</label>
+                    <input type="text" id="recipient_account" name="recipient_account" placeholder="Enter account number" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" id="amount" name="amount" step="0.01" min="1" placeholder="Enter amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description (Optional)</label>
+                    <input type="text" id="description" name="description" placeholder="e.g. Rent, Gift, Bills">
+                </div>
+                <div class="form-group">
+                    <label for="pin">Enter PIN</label>
+                    <input type="password" id="pin" name="pin" maxlength="6" placeholder="Your 4-6 digit PIN" required>
+                </div>
+                <button type="submit" class="btn-primary">Send Money</button>
+            </form>
+        </div>
+    </div>
+
+
+
  <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -17,7 +47,7 @@
                 </div>
                 
                 <div class="nav-links">
-                    <a href="#" class="nav-link">Home</a>
+                    <a href="{% url 'homepage'%}" class="nav-link">Home</a>
                     <a href="#" class="nav-link">About us</a>
                     <a href="#" class="nav-link">Loans</a>
                     <a href="{% url 'account_dashboard' %}"class="nav-link">Account</a>
@@ -33,7 +63,7 @@
 
                 <div class="auth-buttons">
     {% if request.user.is_authenticated %}
-        <span class="username">Hi, {{ request.user.username }}</span>
+        <!-- <span class="username">Hi, {{ request.user.username }}</span> -->
         <a href="{% url 'logout' %}">
             <button class="btn-ghost">Log Out</button>
         </a>
@@ -89,12 +119,26 @@
 
                 <div class="account-header">
     <h1>Account Dashboard</h1>
-    <p>Welcome back, {{ request.user.first_name }} {{ request.user.last_name }}</p>
+    <p>Welcome back, {{ request.user.first_name|upper }} {{ request.user.last_name|upper }}</p>
 </div>
 
 <!-- Account Balance -->
-<div class="balance-card">
+<!-- <div class="balance-card">
     <h2>Account Balance</h2>
+    <div class="balance-amount">₹{{ account.balance }}</div>
+    <div class="balance-info">
+        <span class="account-number">Account: {{ account.account_number }}</span>
+        <span class="last-updated">Last updated: {{ account.last_updated }}</span>
+    </div>
+</div> -->
+
+
+<!-- Balance Card -->
+<div class="balance-card">
+    <div class="balance-header">
+        <h2>Account Balance</h2>
+        <button class="btn-primary transfer-btn" onclick="openmoneyModal()">PAY NOW</button>
+    </div>
     <div class="balance-amount">₹{{ account.balance }}</div>
     <div class="balance-info">
         <span class="account-number">Account: {{ account.account_number }}</span>
@@ -125,19 +169,20 @@
 <h1>{{message}}</h1>
 {% endfor %}
 <!-- Transactions -->
-<div class="transaction-history">
+<!-- <div class="transaction-history"> -->
     <!-- <div class="transaction-header">
         <h2>Recent Transactions</h2>
-    </div> -->  <div class="transaction-header">
+    </div> -->  
+    <!-- <div class="transaction-header">
                         <h2>Recent Transactions</h2>
                         <select class="filter-select">
                             <option>All Transactions</option>
                             <option>Credits Only</option>
                             <option>Debits Only</option>
                         </select>
-                    </div>
+                    </div> -->
 
-    
+<!--     
     <div class="transaction-list">
         {% for tx in transactions %}
             <div class="transaction-item">
@@ -148,10 +193,43 @@
             <p>No recent transactions</p>
         {% endfor %}
     </div>
+</div> -->
+
+
+
+<div class="transaction-history">
+    <div class="transaction-header">
+        <h2>Recent Transactions</h2>
+        <select id="filterSelect" class="filter-select">
+            <option value="all">All Transactions</option>
+            <option value="credit">Credits Only</option>
+            <option value="debit">Debits Only</option>
+        </select>
+    </div>
+
+<div class="transaction-list">
+    {% for tx in transactions %}
+        <div class="transaction-item" data-type="{{ tx.transaction_type }}">
+            
+            <!-- LEFT SIDE: date + description -->
+            <div class="transaction-left">
+                <span>{{ tx.timestamp|date:"M d, Y H:i" }}</span> - 
+                <span>{{ tx.description }}</span>
+            </div>
+
+            <!-- RIGHT SIDE: amount with color -->
+            <div class="transaction-right {% if tx.transaction_type == 'credit' %}credit{% else %}debit{% endif %}">
+                ₹{{ tx.amount }}
+            </div>
+
+        </div>
+    {% empty %}
+        <p>No recent transactions</p>
+    {% endfor %}
 </div>
 
 <!-- Money Transfer Section -->
-<div class="money-transfer">
+<!-- <div class="money-transfer">
     <h2>💸 Transfer Money</h2>
     <form method="POST" action="{% url 'transfer' %}" class="transfer-form">
         {% csrf_token %}
@@ -173,7 +251,7 @@
 
         <button type="submit" class="btn-primary">Send Money</button>
     </form>
-</div>
+</div> -->
 
                 
 
