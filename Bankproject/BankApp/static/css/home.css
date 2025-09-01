@@ -629,9 +629,13 @@ a{
     text-decoration: underline;
 }
 .username {
+     padding-top: 3px;
     margin-right: 10px;
     font-weight: 500;
     color: #333;
+}
+.username:hover {
+    color: #2563eb;
 }
 /* Responsive for small screens */
 @media (max-width: 500px) {

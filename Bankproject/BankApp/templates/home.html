@@ -21,7 +21,9 @@
                     <a href="#" class="nav-link">Home</a>
                     <a href="#" class="nav-link">About us</a>
                     <a href="#" class="nav-link">Loans</a>
+                     {% if request.user.is_authenticated %}
                     <a href="{% url 'account_dashboard' %}"class="nav-link">Account</a>
+                      {% endif %}
                     <a href="#" class="nav-link">Support</a>
                 </div>
                 
@@ -34,7 +36,7 @@
 
                 <div class="auth-buttons">
     {% if request.user.is_authenticated %}
-        <span class="username">Hi, {{ request.user.username }}</span>
+        <span class="username">Hi, {{ request.user.first_name|upper }} {{ request.user.last_name |upper }}</span>
         <a href="{% url 'logout' %}">
             <button class="btn-ghost">Log Out</button>
         </a>

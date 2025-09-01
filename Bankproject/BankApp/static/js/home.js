@@ -249,3 +249,37 @@ document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
     });
 });
 
+
+// money transfer 
+ function openmoneyModal() {
+            document.getElementById("transferModal").style.display = "block";
+        }
+        function closemoneyModal() {
+            document.getElementById("transferModal").style.display = "none";
+        }
+        window.onclick = function(event) {
+            let modal = document.getElementById("transferModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+// tranasation type 
+document.addEventListener("DOMContentLoaded", function () {
+    const filterSelect = document.getElementById("filterSelect");
+    const transactions = document.querySelectorAll(".transaction-item");
+
+    filterSelect.addEventListener("change", function () {
+        const filter = this.value;
+
+        transactions.forEach(tx => {
+            const type = tx.getAttribute("data-type");
+
+            if (filter === "all" || type === filter) {
+                tx.style.display = "block";  // Show
+            } else {
+                tx.style.display = "none";   // Hide
+            }
+        });
+    });
+});
