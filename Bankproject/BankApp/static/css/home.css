@@ -1051,3 +1051,74 @@ a{
 .nav-item:hover .dropdown-menu {
     display: block;
 }
+
+/* ===== CREDIT CARD PAGE ===== */
+
+/* Hero Section (Credit Card) */
+.credit-hero {
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.credit-hero .hero-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.credit-hero .hero-subtitle {
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin: 0 auto 30px auto;
+}
+
+/* Application Form */
+.auth-form {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    color: #1f2937;
+}
+
+.auth-form input,
+.auth-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.auth-form input:focus,
+.auth-form select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-success:hover {
+    background: #059669;
+}
