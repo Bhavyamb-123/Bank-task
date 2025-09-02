@@ -1011,3 +1011,43 @@ a{
 .mb-4 { margin-bottom: 1rem; }
 .mt-2 { margin-top: 0.5rem; }
 .hidden { display: none; }
+
+/* Dropdown Container */
+.nav-item {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    content: " ▼"; /* Small arrow */
+    font-size: 0.6em;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 160px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    z-index: 1000;
+}
+
+/* Dropdown Items */
+.dropdown-item {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-item:hover {
+    background: #f1f1f1;
+}
+
+/* Show dropdown on hover */
+.nav-item:hover .dropdown-menu {
+    display: block;
+}
