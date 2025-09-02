@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const type = tx.getAttribute("data-type");
 
             if (filter === "all" || type === filter) {
-                tx.style.display = "block";  // Show
+                tx.style.display = "flex";  // Show
             } else {
                 tx.style.display = "none";   // Hide
             }
