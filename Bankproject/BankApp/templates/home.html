@@ -24,13 +24,16 @@
                      {% if request.user.is_authenticated %}
                     <a href="{% url 'account_dashboard' %}"class="nav-link">Account</a>
                       {% endif %}
+
+                       {% if request.user.is_authenticated %}
                      <div class="nav-item dropdown">
     <a href="#" class="nav-link dropdown-toggle">Cards</a>
     <div class="dropdown-menu">
-        <a href="#" class="dropdown-item">Credit Card</a>
-        <a href="#" class="dropdown-item">Debit Card</a>
+        <a href="{% url 'creditcard'%}" class="dropdown-item">Credit Card</a>
+        <a href="{% url 'debitcard'%}" class="dropdown-item">Debit Card</a>
     </div>
 </div>
+{% endif %}
                     <a href="#" class="nav-link">Support</a>
                 </div>
                 

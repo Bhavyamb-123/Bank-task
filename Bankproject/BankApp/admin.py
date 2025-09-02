@@ -5,3 +5,6 @@ from .models import *
 admin.site.register(Profile)
 admin.site.register(Account)
 admin.site.register(Transaction)
+admin.site.register(CreditCardApplication)
+admin.site.register(DebitCardApplication)
+

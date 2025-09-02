@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank - Credit Cards</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-content">
+                <div class="logo">
+                    <h1>SecureBank</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="{% url 'homepage'%}" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">About us</a>
+                    <a href="#" class="nav-link">Loans</a>
+                    <!-- <a href="{% url 'creditcard' %}" class="nav-link active">Credit Card</a> -->
+                    <a href="#" class="nav-link">Debit Card</a>
+                    <a href="#" class="nav-link">Support</a>
+                </div>
+                <div class="auth-buttons">
+                    {% if request.user.is_authenticated %}
+                        <span class="username">Hi, {{ request.user.first_name|upper }}</span>
+                        <a href="{% url 'logout' %}">
+                            <button class="btn-ghost">Log Out</button>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero credit-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">SecureBank Credit Cards</h1>
+                <p class="hero-subtitle">Choose the perfect card for your lifestyle. Enjoy exclusive rewards, cashback, and global acceptance.</p>
+                <div class="hero-buttons">
+                    <a href="#apply"><button class="btn-primary btn-large">Apply Now</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Card Types -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Our Credit Cards</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3 class="feature-title">Platinum Card</h3>
+                    <p class="feature-description">Exclusive benefits, higher limits, and luxury lifestyle privileges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎁</div>
+                    <h3 class="feature-title">Rewards Card</h3>
+                    <p class="feature-description">Earn points on every purchase and redeem them for exciting rewards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💵</div>
+                    <h3 class="feature-title">Cashback Card</h3>
+                    <p class="feature-description">Get instant cashback on dining, shopping, and fuel expenses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Global Card</h3>
+                    <p class="feature-description">Travel the world with 0% foreign transaction fees and airport lounge access.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="cta" id="apply">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Apply for Your Credit Card Today</h2>
+                <p class="cta-subtitle">Fill out the quick application form and get instant approval.</p>
+                
+                <form class="auth-form" method="post" action="{% url 'apply_creditcard' %}">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="income">Annual Income</label>
+                        <input type="number" id="income" name="income" placeholder="Enter your annual income" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardType">Select Card Type</label>
+                        <select id="cardType" name="cardType" required>
+                            <option value="platinum">Platinum Card</option>
+                            <option value="rewards">Rewards Card</option>
+                            <option value="cashback">Cashback Card</option>
+                            <option value="global">Global Card</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-success btn-full">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <h3 class="footer-title">SecureBank</h3>
+                <p class="footer-subtitle">Your trusted partner in digital banking</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                    <a href="#" class="footer-link">Help Center</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2025 SecureBank. All rights reserved. FDIC Insured.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

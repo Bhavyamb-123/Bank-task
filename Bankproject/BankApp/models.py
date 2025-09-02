@@ -64,3 +64,45 @@ class MoneyTransfer(models.Model):
 
     def __str__(self):
         return f"₹{self.amount} from {self.sender.account_number} to {self.recipient.account_number}"
+    
+
+
+
+class CreditCardApplication(models.Model):
+    CARD_CHOICES = [
+        ('platinum', 'Platinum Card'),
+        ('rewards', 'Rewards Card'),
+        ('cashback', 'Cashback Card'),
+        ('global', 'Global Card'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    fullname = models.CharField(max_length=150)
+    email = models.EmailField()
+    income = models.DecimalField(max_digits=12, decimal_places=2)
+    cardType = models.CharField(max_length=20, choices=CARD_CHOICES)
+    status = models.CharField(max_length=20, default="Pending")  # Pending, Approved, Rejected
+    applied_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.fullname} - {self.cardType} ({self.status})"
+
+
+class DebitCardApplication(models.Model):
+    CARD_CHOICES = [
+        ('classic', 'Classic Debit Card'),
+        ('gold', 'Gold Debit Card'),
+        ('platinum', 'Platinum Debit Card'),
+        ('international', 'International Debit Card'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    fullname = models.CharField(max_length=150)
+    email = models.EmailField()
+    account_number = models.CharField(max_length=30)
+    cardType = models.CharField(max_length=20, choices=CARD_CHOICES)
+    status = models.CharField(max_length=20, default="Pending")
+    applied_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.fullname} - {self.cardType} ({self.status})"

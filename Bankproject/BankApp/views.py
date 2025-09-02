@@ -12,6 +12,7 @@ from decimal import Decimal
 from decimal import Decimal, InvalidOperation
 from django.db import transaction, DatabaseError
 from django.utils.timezone import now
+from .models import CreditCardApplication, DebitCardApplication
 
 
 # Home Page
@@ -209,3 +210,49 @@ def transfer(request):
         # ✅ Success
         messages.success(request, f"✅ ₹{amount} transferred successfully!")
         return redirect("account_dashboard")
+    # ===== CREDIT CARD =====
+def credit_card_page(request):
+    return render(request, "creditcard.html")
+
+
+def apply_creditcard(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        email = request.POST.get("email")
+        income = request.POST.get("income")
+        cardType = request.POST.get("cardType")
+
+        CreditCardApplication.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            fullname=fullname,
+            email=email,
+            income=income,
+            cardType=cardType,
+        )
+        messages.success(request, "✅ Your credit card application has been submitted successfully!")
+        return redirect("creditcard")
+    return redirect("creditcard")
+
+
+# ===== DEBIT CARD =====
+def debit_card_page(request):
+    return render(request, "debitcard.html")
+
+
+def apply_debitcard(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        email = request.POST.get("email")
+        account_number = request.POST.get("account_number")
+        cardType = request.POST.get("cardType")
+
+        DebitCardApplication.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            fullname=fullname,
+            email=email,
+            account_number=account_number,
+            cardType=cardType,
+        )
+        messages.success(request, "✅ Your debit card application has been submitted successfully!")
+        return redirect("debitcard")
+    return redirect("debitcard")
