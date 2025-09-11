@@ -99,7 +99,7 @@ class DebitCardApplication(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     fullname = models.CharField(max_length=150)
     email = models.EmailField()
-    account_number = models.CharField(max_length=30)
+    account_number = models.CharField(max_length=30, null=True, blank=True)
     cardType = models.CharField(max_length=20, choices=CARD_CHOICES)
     status = models.CharField(max_length=20, default="Pending")
     applied_on = models.DateTimeField(auto_now_add=True)
