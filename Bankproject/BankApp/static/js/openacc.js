@@ -59,53 +59,53 @@ function hideAccountForm() {
 // Initialize page when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   // Form submission
-  // Form submission
-document.getElementById("accountOpeningForm").addEventListener("submit", async function (e) {
-  e.preventDefault()
+  document.getElementById("accountOpeningForm").addEventListener("submit", async function (e) {
+    e.preventDefault()
 
-  // Basic form validation
-  const requiredFields = this.querySelectorAll("[required]")
-  let isValid = true
+    // Basic form validation
+    const requiredFields = this.querySelectorAll("[required]")
+    let isValid = true
 
-  requiredFields.forEach((field) => {
-    if (!field.value.trim()) {
-      isValid = false
-      field.style.borderColor = "#ef4444"
-    } else {
-      field.style.borderColor = "#d1d5db"
-    }
-  })
-
-  if (!isValid) {
-    alert("Please fill in all required fields.")
-    return
-  }
-
-  let formData = new FormData(this)
-
-  try {
-    const response = await fetch("/open-account/", {
-      method: "POST",
-      body: formData,
-      headers: {
-        "X-CSRFToken": getCSRFToken(), // 🔹 Needed for Django
-      },
+    requiredFields.forEach((field) => {
+      if (!field.value.trim()) {
+        isValid = false
+        field.style.borderColor = "#ef4444"
+      } else {
+        field.style.borderColor = "#d1d5db"
+      }
     })
 
-    const result = await response.json()
-
-    if (result.success) {
-      alert(result.message)
-      hideAccountForm()
-      this.reset()
-    } else {
-      alert("Error: " + result.message)
+    if (!isValid) {
+      alert("Please fill in all required fields.")
+      return
     }
-  } catch (error) {
-    alert("Something went wrong. Please try again.")
-    console.error(error)
-  }
-})
+
+    let formData = new FormData(this)
+
+    try {
+      const response = await fetch("/open-account/", {
+        method: "POST",
+        body: formData,
+        headers: {
+          "X-CSRFToken": getCSRFToken(),          // ✅ Needed for Django CSRF
+          "X-Requested-With": "XMLHttpRequest"   // ✅ So Django knows it's AJAX
+        },
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        alert(result.message)
+        hideAccountForm()
+        this.reset()
+      } else {
+        alert("Error: " + result.message)
+      }
+    } catch (error) {
+      alert("Something went wrong. Please try again.")
+      console.error(error)
+    }
+  })
 
   // File upload handling
   document.getElementById("documentUpload").addEventListener("change", (e) => {
@@ -130,6 +130,8 @@ document.getElementById("accountOpeningForm").addEventListener("submit", async f
   // Initialize authentication display
   updateAuthDisplay()
 })
+
+// CSRF token extractor
 function getCSRFToken() {
   let csrfToken = null
   const cookies = document.cookie.split(";")

@@ -86,70 +86,7 @@ def userlogout(request):
 
 
 
-# def open_account(request):
-#     if request.method == "POST":
-#         # Create new application entry
-#         app = AccountApplication.objects.create(
-#             account_type=request.POST.get("accountType"),
-#             first_name=request.POST.get("firstName"),
-#             last_name=request.POST.get("lastName"),
-#             email=request.POST.get("email"),
-#             phone=request.POST.get("phone"),
-#             date_of_birth=request.POST.get("dateOfBirth"),
-#             ssn=request.POST.get("ssn"),
-#             address=request.POST.get("address"),
-#             city=request.POST.get("city"),
-#             state=request.POST.get("state"),
-#             zip_code=request.POST.get("zipCode"),
-#             employment=request.POST.get("employment"),
-#             income=request.POST.get("income"),
-#             pet_name=request.POST.get("petName"),
-#             birth_city=request.POST.get("birthCity"),
-#             initial_deposit=request.POST.get("initialDeposit") or 0.00,
-#             terms_accepted=bool(request.POST.get("terms")),
-#             marketing_opt_in=bool(request.POST.get("marketing")),
-#             document_upload=request.FILES.get("documentUpload"),
-#         )
-#         return JsonResponse({"success": True, "message": "Application submitted successfully!"})
-
-#     return JsonResponse({"success": False, "message": "Invalid request"})
-#     return HttpResponseRedirect(reverse('homepage'))
-
-# def open_account(request):
-#     if request.method == "POST":
-#         # Create new application entry
-#         app = AccountApplication.objects.create(
-#             account_type=request.POST.get("accountType"),
-#             first_name=request.POST.get("firstName"),
-#             last_name=request.POST.get("lastName"),
-#             email=request.POST.get("email"),
-#             phone=request.POST.get("phone"),
-#             date_of_birth=request.POST.get("dateOfBirth"),
-#             ssn=request.POST.get("ssn"),
-#             address=request.POST.get("address"),
-#             city=request.POST.get("city"),
-#             state=request.POST.get("state"),
-#             zip_code=request.POST.get("zipCode"),
-#             employment=request.POST.get("employment"),
-#             income=request.POST.get("income"),
-#             pet_name=request.POST.get("petName"),
-#             birth_city=request.POST.get("birthCity"),
-#             initial_deposit=request.POST.get("initialDeposit") or 0.00,
-#             terms_accepted=bool(request.POST.get("terms")),
-#             marketing_opt_in=bool(request.POST.get("marketing")),
-#             document_upload=request.FILES.get("documentUpload"),
-#         )
-#         return JsonResponse({"success": True, "message": "Application submitted successfully!"})
-
-#     # If request is AJAX → return JSON
-#     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-#         return JsonResponse({"success": False, "message": "Invalid request"})
-#     # Otherwise → redirect to homepage
-#     return HttpResponseRedirect(reverse('homepage'))
-
-
 def open_account(request):
-    print(11111111111)
     if request.method == "POST":
         # Save application details
         app = AccountApplication.objects.create(
