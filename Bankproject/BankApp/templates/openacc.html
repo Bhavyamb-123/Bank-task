@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/openacc.css' %}">
 </head>
 <body>
-    <!-- Header -->
+  
     <header class="header">
         <div class="container">
             <div class="nav-brand">
@@ -22,12 +22,12 @@
                 <a href="#" class="nav-link">Support</a>
             </nav>
             <div class="auth-section">
-                <!-- Not logged in state -->
+              
                 <div id="auth-buttons" class="auth-buttons">
                     <button class="btn-secondary" onclick="showLogin()">Log In</button>
                     <button class="btn-primary" onclick="showSignUp()">Sign Up</button>
                 </div>
-                <!-- Logged in state -->
+               
                 <div id="user-info" class="user-info" style="display: none;">
                     <span id="username-display">Hi, user@email.com</span>
                     <button class="btn-secondary" onclick="logout()">Log Out</button>
@@ -36,9 +36,9 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+
     <main id="main-content">
-        <!-- Hero Section -->
+        
         <section class="hero">
             <div class="container">
                 <h1 class="hero-title">
@@ -56,7 +56,7 @@
             </div>
         </section>
 
-        <!-- Features Section -->
+        
         <section class="features">
             <div class="container">
                 <h2 class="section-title">Why Choose SecureBank?</h2>
@@ -85,7 +85,7 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
+     
         <section class="cta">
             <div class="container">
                 <h2>Ready to Start Your Financial Journey?</h2>
@@ -95,7 +95,7 @@
         </section>
     </main>
 
-    <!-- Account Opening Form -->
+    
     <div id="account-form" class="form-overlay" style="display: none;">
         <div class="form-container">
             <div class="form-header">
@@ -104,8 +104,8 @@
                 <button class="close-btn" onclick="hideAccountForm()">&times;</button>
             </div>
 
-            <form id="accountOpeningForm" class="account-form">
-                <!-- Account Type Selection -->
+            <form id="accountOpeningForm" class="account-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                
                 <div class="form-section">
                     <h3>Choose Your Account Type</h3>
                     <div class="account-types">
@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                <!-- Personal Information -->
+                
                 <div class="form-section">
                     <h3>Personal Information</h3>
                     <div class="form-grid">
@@ -222,7 +222,7 @@
                     </div>
                 </div>
 
-                <!-- Identity Verification -->
+                
                 <div class="form-section">
                     <h3>Identity Verification</h3>
                     
@@ -263,7 +263,7 @@
                     </div>
                 </div>
 
-                <!-- Initial Deposit -->
+               
                 <div class="form-section">
                     <h3>Initial Deposit (Optional)</h3>
                     <div class="form-group">
@@ -273,7 +273,6 @@
                     </div>
                 </div>
 
-                <!-- Terms and Conditions -->
                 <div class="form-section">
                     <div class="checkbox-group">
                         <label class="checkbox-label">
@@ -291,7 +290,7 @@
                     </div>
                 </div>
 
-                <!-- Form Actions -->
+               
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" onclick="hideAccountForm()">Cancel</button>
                     <button type="submit" class="btn-primary">Submit Application</button>
@@ -300,7 +299,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
+   
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -316,7 +315,7 @@
         </div>
     </footer>
 
-    <!-- Added external JavaScript file link -->
+   
     
 <script src="{% static 'js/openacc.js' %}"></script>
 </body>
