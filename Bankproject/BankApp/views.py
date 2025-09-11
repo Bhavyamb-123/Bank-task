@@ -4,7 +4,8 @@ from .models import*
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .models import Profile
+from django.http import JsonResponse
+
 
 # Home Page
 def homepage(request):
@@ -86,67 +87,31 @@ def userlogout(request):
 
 def open_account(request):
     if request.method == "POST":
-        # Step 1: Account Type
-        account_type = request.POST.get("account_type")
-
-        # Step 2: Personal Info (HTML names kept as-is)
-        dob = request.POST.get("dateOfBirth")   # HTML: dateOfBirth
-        ssn = request.POST.get("ssn")           # HTML: ssn
-        address = request.POST.get("address")   # HTML: address
-        city = request.POST.get("city")         # HTML: city
-        state = request.POST.get("state")       # HTML: state
-        zipcode = request.POST.get("zipCode")   # HTML: zipCode
-        employment = request.POST.get("employment")  # HTML: employment
-        income = request.POST.get("income")          # HTML: income
-
-        # Step 3: Identity Verification
-        document = request.FILES.get("idDocument")  # HTML: idDocument
-        security_q1 = request.POST.get("securityQuestion1")  # HTML: securityQuestion1
-        security_q2 = request.POST.get("securityQuestion2")  # HTML: securityQuestion2
-
-        # Step 4: Review & Deposit
-        initial_deposit = request.POST.get("initialDeposit") or 0  # HTML: initialDeposit
-        agree_terms = request.POST.get("agreeTerms") == "on"       # HTML: agreeTerms
-        agree_marketing = request.POST.get("agreeMarketing") == "on"  # HTML: agreeMarketing
-
-        # Get or create Profile of logged-in user
-        profile = Profile.objects.filter(user=request.user).first()
-        if not profile:
-            profile = Profile.objects.create(
-                user=request.user,
-                Firstname=request.user.first_name,
-                Lastname=request.user.last_name,
-                Email=request.user.email
-            )
-
-        # Save AccountApplication
-        AccountApplication.objects.create(
-            profile=profile,
-            account_type=account_type,
-            date_of_birth=dob,
-            ssn=ssn,
-            address=address,
-            city=city,
-            state=state,
-            zipcode=zipcode,
-            employment_status=employment,
-            annual_income=income,
-            id_document=document,
-            security_question1=security_q1,
-            security_question2=security_q2,
-            initial_deposit=initial_deposit,
-            agree_terms=agree_terms,
-            agree_marketing=agree_marketing,
+        # Create new application entry
+        app = AccountApplication.objects.create(
+            account_type=request.POST.get("accountType"),
+            first_name=request.POST.get("firstName"),
+            last_name=request.POST.get("lastName"),
+            email=request.POST.get("email"),
+            phone=request.POST.get("phone"),
+            date_of_birth=request.POST.get("dateOfBirth"),
+            ssn=request.POST.get("ssn"),
+            address=request.POST.get("address"),
+            city=request.POST.get("city"),
+            state=request.POST.get("state"),
+            zip_code=request.POST.get("zipCode"),
+            employment=request.POST.get("employment"),
+            income=request.POST.get("income"),
+            pet_name=request.POST.get("petName"),
+            birth_city=request.POST.get("birthCity"),
+            initial_deposit=request.POST.get("initialDeposit") or 0.00,
+            terms_accepted=bool(request.POST.get("terms")),
+            marketing_opt_in=bool(request.POST.get("marketing")),
+            document_upload=request.FILES.get("documentUpload"),
         )
+        return JsonResponse({"success": True, "message": "Application submitted successfully!"})
 
-        return redirect("account_success")
-
-    return render(request, "open_account/form.html")
-
-
-
-def account_success(request):
-    return render(request, "open_account/success.html")
-
+    return JsonResponse({"success": False, "message": "Invalid request"})
+    return HttpResponseRedirect(reverse('homepage'))
 
 
