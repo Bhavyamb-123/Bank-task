@@ -1,0 +1,361 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Loan Application - SecureBank</title>
+    <link rel="stylesheet" href="{% static 'css/loanapplication.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-content">
+                <div class="logo">
+                    <h1>SecureBank</h1>
+                </div>
+                <!-- <button class="mobile-menu-btn">☰</button> -->
+            </div>
+        </div>
+    </nav>
+    <main>
+        <section class="application-hero">
+            <div class="container">
+                <!-- <div class="breadcrumb">
+                    <a href="loans.html">Loans</a> > <span>Educational Loan Application</span>
+                </div> -->
+                <h1>Educational Loan Application</h1>
+                <p>Invest in your future with competitive education financing starting at 3.75% APR</p>
+                <div class="loan-highlights">
+                    <div class="highlight">
+                        <span class="highlight-value">Up to ₹2 Lakh/Year</span>
+                        <span class="highlight-label">Loan Amount</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-value">Deferred Payment</span>
+                        <span class="highlight-label">Options Available</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-value">No Origination</span>
+                        <span class="highlight-label">Fees</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="application-form">
+            <div class="container">
+                <form class="loan-application-form" id="educationalLoanForm">
+                    <div class="form-section">
+                        <h2>Education Details</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="educationLevel">Education Level *</label>
+                                <select id="educationLevel" name="educationLevel" required>
+                                    <option value="">Select Level</option>
+                                    <option value="undergraduate">Undergraduate</option>
+                                    <option value="graduate">Graduate/Masters</option>
+                                    <option value="doctorate">Doctorate/PhD</option>
+                                    <option value="professional">Professional Program</option>
+                                    <option value="certificate">Certificate Program</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fieldOfStudy">Field of Study *</label>
+                                <input type="text" id="fieldOfStudy" name="fieldOfStudy" placeholder="e.g., Computer Science, Medicine, Engineering" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="institutionName">Institution Name *</label>
+                                <input type="text" id="institutionName" name="institutionName" placeholder="University/College Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="institutionLocation">Institution Location *</label>
+                                <input type="text" id="institutionLocation" name="institutionLocation" placeholder="City, State/Country" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="programDuration">Program Duration *</label>
+                                <select id="programDuration" name="programDuration" required>
+                                    <option value="">Select Duration</option>
+                                    <option value="1">1 Year</option>
+                                    <option value="2">2 Years</option>
+                                    <option value="3">3 Years</option>
+                                    <option value="4">4 Years</option>
+                                    <option value="5">5 Years</option>
+                                    <option value="6">6+ Years</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="startDate">Program Start Date *</label>
+                                <input type="date" id="startDate" name="startDate" required>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="totalCost">Total Program Cost *</label>
+                                <input type="number" id="totalCost" name="totalCost" placeholder="₹5,00,000" min="50000" max="20000000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanAmount">Loan Amount Needed *</label>
+                                <input type="number" id="loanAmount" name="loanAmount" placeholder="₹4,00,000" min="25000" max="20000000" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Student Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date of Birth *</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="citizenship">Citizenship Status *</label>
+                                <select id="citizenship" name="citizenship" required>
+                                    <option value="">Select Status</option>
+                                    <option value="citizen">Indian Citizen</option>
+                                    <option value="permanent-resident">Permanent Resident</option>
+                                    <option value="international">International Student</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="currentAddress">Current Address *</label>
+                            <textarea id="currentAddress" name="currentAddress" rows="3" required></textarea>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="previousEducation">Previous Education *</label>
+                                <input type="text" id="previousEducation" name="previousEducation" placeholder="e.g., Bachelor's in Engineering" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gpa">GPA/Percentage *</label>
+                                <input type="text" id="gpa" name="gpa" placeholder="e.g., 3.5 GPA or 85%" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Student Financial Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="employmentStatus">Current Employment Status *</label>
+                                <select id="employmentStatus" name="employmentStatus" required>
+                                    <option value="">Select Status</option>
+                                    <option value="student">Full-time Student</option>
+                                    <option value="part-time-work">Part-time Work</option>
+                                    <option value="full-time-work">Full-time Work</option>
+                                    <option value="internship">Internship</option>
+                                    <option value="unemployed">Unemployed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="monthlyIncome">Monthly Income (if any)</label>
+                                <input type="number" id="monthlyIncome" name="monthlyIncome" placeholder="₹0" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="bankAccount">Primary Bank Account *</label>
+                                <input type="text" id="bankAccount" name="bankAccount" placeholder="Bank Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="existingLoans">Existing Student Loans</label>
+                                <input type="number" id="existingLoans" name="existingLoans" placeholder="₹0" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="scholarships">Scholarships/Grants Received</label>
+                                <input type="number" id="scholarships" name="scholarships" placeholder="₹0" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="creditScore">Credit Score (if known)</label>
+                                <input type="number" id="creditScore" name="creditScore" min="300" max="850" placeholder="Not applicable for students">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Co-signer Information</h2>
+                        <div class="form-group full-width">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="hasCoSigner" name="hasCoSigner">
+                                <label for="hasCoSigner">I have a co-signer for this loan</label>
+                            </div>
+                        </div>
+                        
+                        <div id="coSignerDetails" style="display: none;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="coSignerFirstName">Co-signer First Name</label>
+                                    <input type="text" id="coSignerFirstName" name="coSignerFirstName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="coSignerLastName">Co-signer Last Name</label>
+                                    <input type="text" id="coSignerLastName" name="coSignerLastName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="coSignerEmail">Co-signer Email</label>
+                                    <input type="email" id="coSignerEmail" name="coSignerEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="coSignerPhone">Co-signer Phone</label>
+                                    <input type="tel" id="coSignerPhone" name="coSignerPhone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="coSignerRelation">Relationship to Student</label>
+                                    <select id="coSignerRelation" name="coSignerRelation">
+                                        <option value="">Select Relationship</option>
+                                        <option value="parent">Parent</option>
+                                        <option value="guardian">Guardian</option>
+                                        <option value="spouse">Spouse</option>
+                                        <option value="relative">Relative</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="coSignerIncome">Co-signer Monthly Income</label>
+                                    <input type="number" id="coSignerIncome" name="coSignerIncome" placeholder="₹50,000" min="0">
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="coSignerAddress">Co-signer Address</label>
+                                <textarea id="coSignerAddress" name="coSignerAddress" rows="3"></textarea>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="coSignerEmployment">Co-signer Employment</label>
+                                    <input type="text" id="coSignerEmployment" name="coSignerEmployment" placeholder="Company/Employer Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="coSignerCreditScore">Co-signer Credit Score</label>
+                                    <input type="number" id="coSignerCreditScore" name="coSignerCreditScore" min="300" max="850">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Terms & Conditions</h2>
+                        <div class="terms-section">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                <label for="agreeTerms">I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> *</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="creditCheck" name="creditCheck" required>
+                                <label for="creditCheck">I authorize SecureBank to check credit reports for all applicants *</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="enrollmentVerification" name="enrollmentVerification" required>
+                                <label for="enrollmentVerification">I authorize verification of enrollment status with the educational institution *</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="educationUpdates" name="educationUpdates">
+                                <label for="educationUpdates">I'd like to receive updates about education financing and student resources</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="submit" class="btn-primary" id="submitBtn">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SecureBank</h3>
+                    <p>Your trusted financial partner</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="#">Checking Accounts</a></li>
+                        <li><a href="#">Savings Accounts</a></li>
+                        <li><a href="loans.html">Loans</a></li>
+                        <li><a href="#">Credit Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('hasCoSigner').addEventListener('change', function() {
+            const coSignerDetails = document.getElementById('coSignerDetails')
+            if (this.checked) {
+                coSignerDetails.style.display = 'block'
+            } else {
+                coSignerDetails.style.display = 'none'
+                const coSignerFields = coSignerDetails.querySelectorAll('input, select, textarea')
+                coSignerFields.forEach(field => field.value = '')
+            }
+        })
+
+        function validateForm() {
+            const requiredFields = document.querySelectorAll("[required]")
+            let isValid = true
+
+            requiredFields.forEach((field) => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = "#ef4444"
+                    isValid = false
+                } else {
+                    field.style.borderColor = "#d1d5db"
+                }
+            })
+
+            if (!isValid) {
+                alert("Please fill in all required fields before submitting.")
+            }
+
+            return isValid
+        }
+
+        document.getElementById("educationalLoanForm").addEventListener("submit", (e) => {
+            e.preventDefault()
+
+            if (!validateForm()) {
+                return
+            }
+
+            const agreeTerms = document.getElementById("agreeTerms").checked
+            const creditCheck = document.getElementById("creditCheck").checked
+            const enrollmentVerification = document.getElementById("enrollmentVerification").checked
+
+            if (!agreeTerms || !creditCheck || !enrollmentVerification) {
+                alert("Please agree to all required terms and conditions to proceed.")
+                return
+            }
+
+            alert("Thank you! Your educational loan application has been submitted successfully. You will receive a confirmation email shortly.")
+        })
+    </script>
+</body>
+</html>

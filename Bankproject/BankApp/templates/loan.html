@@ -1,0 +1,297 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loans - SecureBank</title>
+    <link rel="stylesheet" href="{% static 'css/loan.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-content">
+                <div class="logo">
+                    <h1>SecureBank</h1>
+                </div>
+                <!-- <button class="mobile-menu-btn">☰</button> -->
+            </div>
+        </div>
+    </nav>
+    <!-- <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html"><h1>SecureBank</h1></a>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Personal</a>
+                <a href="#" class="nav-link">Business</a>
+                <a href="loans.html" class="nav-link active">Loans</a>
+                <a href="#" class="nav-link">Investments</a>
+                <a href="#" class="nav-link">Support</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" class="btn-secondary">Log In</a>
+                <a href="open-account.html" class="btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header> -->
+
+    <main>
+        <!-- Hero Section -->
+        <section class="loans-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Find the Perfect Loan for Your Needs</h1>
+                    <p class="hero-description">
+                        Competitive rates, flexible terms, and quick approval process. 
+                        Let us help you achieve your financial goals.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">2.99%</span>
+                            <span class="stat-label">Starting APR</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">24hrs</span>
+                            <span class="stat-label">Quick Approval</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">₹500K</span>
+                            <span class="stat-label">Max Loan Amount</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loan Types Section -->
+        <section class="loan-types">
+            <div class="container">
+                <h2 class="section-title">Our Loan Products</h2>
+                <div class="loan-grid">
+                    <div class="loan-card">
+                        <div class="loan-icon">🏠</div>
+                        <h3>Home Loans</h3>
+                        <p class="loan-rate">Starting at 3.25% APR</p>
+                        <ul class="loan-features">
+                            <li>Up to ₹2M loan amount</li>
+                            <li>Fixed and adjustable rates</li>
+                            <li>First-time buyer programs</li>
+                            <li>No prepayment penalties</li>
+                        </ul>
+                        <a href="{% url 'homeloan' %}"><button class="btn-primary">Apply Now</button></a>
+                        <a href="#" class="learn-more">Learn More</a>
+                    </div>
+
+                    <div class="loan-card">
+                        <div class="loan-icon">💳</div>
+                        <h3>Personal Loans</h3>
+                        <p class="loan-rate">Starting at 5.99% APR</p>
+                        <ul class="loan-features">
+                            <li>₹1,000 to ₹100,000</li>
+                            <li>No collateral required</li>
+                            <li>Fixed monthly payments</li>
+                            <li>Same-day funding</li>
+                        </ul>
+                        <a href="{% url 'personalloanapplication' %}"><button class="btn-primary">Apply Now</button></a>
+                        <a href="#" class="learn-more">Learn More</a>
+                    </div>
+
+                    <div class="loan-card">
+                        <div class="loan-icon">🎓</div>
+                        <h3>Educational Loans</h3>
+                        <p class="loan-rate">Starting at 3.75% APR</p>
+                        <ul class="loan-features">
+                            <li>Up to ₹200,000 per year</li>
+                            <li>Undergraduate & graduate</li>
+                            <li>Deferred payment options</li>
+                            <li>No origination fees</li>
+                        </ul>
+                        <a href="{% url 'educationloanapplication' %}"><button class="btn-primary">Apply Now</button></a>
+                        <a href="#" class="learn-more">Learn More</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Loan Calculator Section -->
+        <section class="loan-calculator">
+            <div class="container">
+                <h2 class="section-title">Loan Calculator</h2>
+                <div class="calculator-container">
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="loanAmount">Loan Amount</label>
+                            <input type="number" id="loanAmount" placeholder="₹20,00,000" min="50000" max="40000000">
+                        </div>
+                        <div class="form-group">
+                            <label for="interestRate">Interest Rate (%)</label>
+                            <input type="number" id="interestRate" placeholder="5.99" min="0.1" max="30" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="loanTerm">Loan Term (years)</label>
+                            <select id="loanTerm">
+                                <option value="1">1 year</option>
+                                <option value="2">2 years</option>
+                                <option value="3">3 years</option>
+                                <option value="5" selected>5 years</option>
+                                <option value="7">7 years</option>
+                                <option value="10">10 years</option>
+                                <option value="15">15 years</option>
+                                <option value="30">30 years</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn-primary" onclick="calculateLoan()">Calculate</button>
+                    </div>
+                    
+                    <div class="calculator-results">
+                        <h3>Your Monthly Payment</h3>
+                        <div class="payment-amount" id="monthlyPayment">₹0</div>
+                        <div class="payment-details">
+                            <div class="detail-item">
+                                <span>Total Interest:</span>
+                                <span id="totalInterest">₹0</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Total Amount:</span>
+                                <span id="totalAmount">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Process Section -->
+        <section class="application-process">
+            <div class="container">
+                <h2 class="section-title">Simple Application Process</h2>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Apply Online</h3>
+                        <p>Complete our secure online application in just 5 minutes</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Get Pre-Approved</h3>
+                        <p>Receive a decision within 24 hours with no impact to your credit</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Finalize & Fund</h3>
+                        <p>Complete documentation and receive funds as soon as the same day</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Requirements Section -->
+        <section class="loan-requirements">
+            <div class="container">
+                <h2 class="section-title">Loan Requirements</h2>
+                <div class="requirements-grid">
+                    <div class="requirement-card">
+                        <h3>Personal Loans</h3>
+                        <ul>
+                            <li>Minimum credit score: 650</li>
+                            <li>Annual income: $30,000+</li>
+                            <li>Employment history: 2+ years</li>
+                            <li>Debt-to-income ratio: <40%</li>
+                        </ul>
+                    </div>
+                    <div class="requirement-card">
+                        <h3>Auto Loans</h3>
+                        <ul>
+                            <li>Minimum credit score: 600</li>
+                            <li>Valid driver's license</li>
+                            <li>Proof of insurance</li>
+                            <li>Vehicle information</li>
+                        </ul>
+                    </div>
+                    <div class="requirement-card">
+                        <h3>Home Loans</h3>
+                        <ul>
+                            <li>Minimum credit score: 620</li>
+                            <li>Down payment: 3-20%</li>
+                            <li>Employment verification</li>
+                            <li>Property appraisal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Get Started?</h2>
+                    <p>Apply for a loan today and get a decision within 24 hours</p>
+                    <div class="cta-actions">
+                        <button class="btn-primary">Apply Now</button>
+                        <a href="#" class="btn-secondary">Speak with an Expert</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SecureBank</h3>
+                    <p>Your trusted financial partner</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="#">Checking Accounts</a></li>
+                        <li><a href="#">Savings Accounts</a></li>
+                        <li><a href="loans.html">Loans</a></li>
+                        <li><a href="#">Credit Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function calculateLoan() {
+            const amount = parseFloat(document.getElementById('loanAmount').value) || 25000;
+            const rate = parseFloat(document.getElementById('interestRate').value) || 5.99;
+            const term = parseInt(document.getElementById('loanTerm').value) || 5;
+            
+            const monthlyRate = rate / 100 / 12;
+            const numPayments = term * 12;
+            
+            const monthlyPayment = (amount * monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
+                                 (Math.pow(1 + monthlyRate, numPayments) - 1);
+            
+            const totalAmount = monthlyPayment * numPayments;
+            const totalInterest = totalAmount - amount;
+            
+            document.getElementById('monthlyPayment').textContent = '₹' + monthlyPayment.toFixed(2);
+            document.getElementById('totalInterest').textContent = '₹' + totalInterest.toFixed(2);
+            document.getElementById('totalAmount').textContent = '₹' + totalAmount.toFixed(2);
+        }
+        
+        // Calculate default values on page load
+        window.onload = function() {
+            calculateLoan();
+        };
+    </script>
+</body>
+</html>

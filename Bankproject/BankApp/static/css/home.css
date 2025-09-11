@@ -59,6 +59,15 @@ body {
     transition: color 0.3s;
 }
 
+a{
+    text-decoration: none;
+    color: #475569;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+a:hover {
+    color: #2563eb;
+}
 .nav-link:hover {
     color: #2563eb;
 }

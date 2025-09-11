@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Loan Application - SecureBank</title>
+    <link rel="stylesheet" href="{% static 'css/loanapplication.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-content">
+                <div class="logo">
+                    <h1>SecureBank</h1>
+                </div>
+                <!-- <button class="mobile-menu-btn">☰</button> -->
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="application-hero">
+            <div class="container">
+                <!-- <div class="breadcrumb">
+                    <a href="loans.html">Loans</a> > <span>Home Loan Application</span>
+                </div> -->
+                <h1>Home Loan Application</h1>
+                <p>Get pre-approved for your dream home with rates starting at 3.25% APR</p>
+                <div class="loan-highlights">
+                    <div class="highlight">
+                        <span class="highlight-value">Up to ₹2 Crore</span>
+                        <span class="highlight-label">Loan Amount</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-value">30 Years</span>
+                        <span class="highlight-label">Max Term</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-value">3% Down</span>
+                        <span class="highlight-label">Minimum</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="application-form">
+            <div class="container">
+                <form class="loan-application-form" id="homeLoanForm">
+                    <!-- Converted all form-step divs to form-section and made them all visible -->
+                    <!-- Loan Details Section -->
+                    <div class="form-section">
+                        <h2>Loan Details</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="loanAmount">Desired Loan Amount *</label>
+                                <input type="number" id="loanAmount" name="loanAmount" placeholder="₹50,00,000" min="500000" max="20000000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanPurpose">Loan Purpose *</label>
+                                <select id="loanPurpose" name="loanPurpose" required>
+                                    <option value="">Select Purpose</option>
+                                    <option value="purchase">Home Purchase</option>
+                                    <option value="refinance">Refinance</option>
+                                    <option value="construction">Construction</option>
+                                    <option value="renovation">Home Renovation</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyType">Property Type *</label>
+                                <select id="propertyType" name="propertyType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="villa">Villa</option>
+                                    <option value="independent-house">Independent House</option>
+                                    <option value="plot">Plot</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="downPayment">Down Payment Amount *</label>
+                                <input type="number" id="downPayment" name="downPayment" placeholder="₹15,00,000" min="150000" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information Section -->
+                    <div class="form-section">
+                        <h2>Personal Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date of Birth *</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="maritalStatus">Marital Status *</label>
+                                <select id="maritalStatus" name="maritalStatus" required>
+                                    <option value="">Select Status</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="divorced">Divorced</option>
+                                    <option value="widowed">Widowed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="currentAddress">Current Address *</label>
+                            <textarea id="currentAddress" name="currentAddress" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Financial Information Section -->
+                    <div class="form-section">
+                        <h2>Financial Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="employmentType">Employment Type *</label>
+                                <select id="employmentType" name="employmentType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="salaried">Salaried</option>
+                                    <option value="self-employed">Self Employed</option>
+                                    <option value="business">Business Owner</option>
+                                    <option value="retired">Retired</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="monthlyIncome">Monthly Income *</label>
+                                <input type="number" id="monthlyIncome" name="monthlyIncome" placeholder="₹1,00,000" min="25000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="workExperience">Work Experience (Years) *</label>
+                                <input type="number" id="workExperience" name="workExperience" min="0" max="50" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyName">Company/Employer Name *</label>
+                                <input type="text" id="companyName" name="companyName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="existingLoans">Existing Loan EMIs (Monthly)</label>
+                                <input type="number" id="existingLoans" name="existingLoans" placeholder="₹0" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="creditScore">Credit Score (if known)</label>
+                                <input type="number" id="creditScore" name="creditScore" min="300" max="850">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Details Section -->
+                    <div class="form-section">
+                        <h2>Property Details</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="propertyValue">Property Value *</label>
+                                <input type="number" id="propertyValue" name="propertyValue" placeholder="₹75,00,000" min="1000000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyAge">Property Age *</label>
+                                <select id="propertyAge" name="propertyAge" required>
+                                    <option value="">Select Age</option>
+                                    <option value="new">Under Construction</option>
+                                    <option value="0-5">0-5 Years</option>
+                                    <option value="5-10">5-10 Years</option>
+                                    <option value="10-20">10-20 Years</option>
+                                    <option value="20+">20+ Years</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyCity">Property City *</label>
+                                <input type="text" id="propertyCity" name="propertyCity" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyArea">Built-up Area (sq ft) *</label>
+                                <input type="number" id="propertyArea" name="propertyArea" min="200" required>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="propertyAddress">Property Address *</label>
+                            <textarea id="propertyAddress" name="propertyAddress" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Review & Submit Section -->
+                    <div class="form-section">
+                        <h2>Review & Submit</h2>
+                        <div class="application-summary">
+                            <h3>Application Summary</h3>
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <span class="label">Loan Amount:</span>
+                                    <span class="value" id="summaryLoanAmount">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Property Value:</span>
+                                    <span class="value" id="summaryPropertyValue">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Down Payment:</span>
+                                    <span class="value" id="summaryDownPayment">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Monthly Income:</span>
+                                    <span class="value" id="summaryIncome">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="terms-section">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                <label for="agreeTerms">I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> *</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="creditCheck" name="creditCheck" required>
+                                <label for="creditCheck">I authorize SecureBank to check my credit report *</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Replaced step navigation with single submit button -->
+                    <div class="form-navigation">
+                        <button type="submit" class="btn-primary" id="submitBtn">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SecureBank</h3>
+                    <p>Your trusted financial partner</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="#">Checking Accounts</a></li>
+                        <li><a href="#">Savings Accounts</a></li>
+                        <li><a href="loans.html">Loans</a></li>
+                        <li><a href="#">Credit Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Added simple JavaScript for form summary updates -->
+    <script>
+        // Update summary when form fields change
+        function updateSummary() {
+            const loanAmount = document.getElementById('loanAmount').value;
+            const propertyValue = document.getElementById('propertyValue').value;
+            const downPayment = document.getElementById('downPayment').value;
+            const monthlyIncome = document.getElementById('monthlyIncome').value;
+
+            document.getElementById('summaryLoanAmount').textContent = loanAmount ? `₹${parseInt(loanAmount).toLocaleString('en-IN')}` : '-';
+            document.getElementById('summaryPropertyValue').textContent = propertyValue ? `₹${parseInt(propertyValue).toLocaleString('en-IN')}` : '-';
+            document.getElementById('summaryDownPayment').textContent = downPayment ? `₹${parseInt(downPayment).toLocaleString('en-IN')}` : '-';
+            document.getElementById('summaryIncome').textContent = monthlyIncome ? `₹${parseInt(monthlyIncome).toLocaleString('en-IN')}` : '-';
+        }
+
+        // Add event listeners to update summary
+        document.getElementById('loanAmount').addEventListener('input', updateSummary);
+        document.getElementById('propertyValue').addEventListener('input', updateSummary);
+        document.getElementById('downPayment').addEventListener('input', updateSummary);
+        document.getElementById('monthlyIncome').addEventListener('input', updateSummary);
+
+        // Form submission
+        document.getElementById('homeLoanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Application submitted successfully! We will contact you within 24 hours.');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Loan Application - SecureBank</title>
+    <link rel="stylesheet" href="{% static 'css/loanapplication.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-content">
+                <div class="logo">
+                    <h1>SecureBank</h1>
+                </div>
+                <!-- <button class="mobile-menu-btn">☰</button> -->
+            </div>
+        </div>
+    </nav>
+    <main>
+        <section class="application-hero">
+            <div class="container">
+                <!-- <div class="breadcrumb">
+                    <a href="loans.html">Loans</a> > <span>Personal Loan Application</span>
+                </div> -->
+                <h1>Personal Loan Application</h1>
+                <p>Get quick funding for your personal needs with rates starting at 5.99% APR</p>
+                <div class="loan-highlights">
+                    <div class="highlight">
+                        <span class="highlight-value">₹1,000 - ₹1,00,000</span>
+                        <span class="highlight-label">Loan Range</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-value">Same Day</span>
+                        <span class="highlight-label">Funding</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-value">No Collateral</span>
+                        <span class="highlight-label">Required</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="application-form">
+            <div class="container">
+                <form class="loan-application-form" id="personalLoanForm">
+                    <!-- Section 1: Loan Purpose -->
+                    <div class="form-section" id="section1">
+                        <h2>Loan Purpose</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="loanPurpose">What will you use this loan for? *</label>
+                                <select id="loanPurpose" name="loanPurpose" required>
+                                    <option value="">Select Purpose</option>
+                                    <option value="debt-consolidation">Debt Consolidation</option>
+                                    <option value="home-improvement">Home Improvement</option>
+                                    <option value="medical-expenses">Medical Expenses</option>
+                                    <option value="wedding">Wedding</option>
+                                    <option value="vacation">Vacation/Travel</option>
+                                    <option value="education">Education</option>
+                                    <option value="business">Small Business</option>
+                                    <option value="emergency">Emergency Expenses</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanAmount">Desired Loan Amount *</label>
+                                <input type="number" id="loanAmount" name="loanAmount" placeholder="₹50,000" min="1000" max="10000000" required>
+                            </div>
+                        </div>
+                        <div class="form-group full-width" id="otherPurposeGroup" style="display: none;">
+                            <label for="otherPurpose">Please specify the purpose</label>
+                            <textarea id="otherPurpose" name="otherPurpose" rows="3" placeholder="Please describe how you plan to use the loan"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Personal Information -->
+                    <div class="form-section" id="section2">
+                        <h2>Personal Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date of Birth *</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="maritalStatus">Marital Status *</label>
+                                <select id="maritalStatus" name="maritalStatus" required>
+                                    <option value="">Select Status</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="divorced">Divorced</option>
+                                    <option value="widowed">Widowed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="currentAddress">Current Address *</label>
+                            <textarea id="currentAddress" name="currentAddress" rows="3" required></textarea>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="residenceType">Residence Type *</label>
+                                <select id="residenceType" name="residenceType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="owned">Owned</option>
+                                    <option value="rented">Rented</option>
+                                    <option value="family">Living with Family</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="yearsAtAddress">Years at Current Address *</label>
+                                <input type="number" id="yearsAtAddress" name="yearsAtAddress" min="0" max="50" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Financial Information -->
+                    <div class="form-section" id="section3">
+                        <h2>Financial Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="employmentType">Employment Type *</label>
+                                <select id="employmentType" name="employmentType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="full-time">Full-time Employee</option>
+                                    <option value="part-time">Part-time Employee</option>
+                                    <option value="self-employed">Self Employed</option>
+                                    <option value="business-owner">Business Owner</option>
+                                    <option value="freelancer">Freelancer</option>
+                                    <option value="retired">Retired</option>
+                                    <option value="student">Student</option>
+                                    <option value="unemployed">Unemployed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="monthlyIncome">Monthly Income *</label>
+                                <input type="number" id="monthlyIncome" name="monthlyIncome" placeholder="₹30,000" min="10000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="workExperience">Work Experience (Years) *</label>
+                                <input type="number" id="workExperience" name="workExperience" min="0" max="50" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyName">Company/Employer Name *</label>
+                                <input type="text" id="companyName" name="companyName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="monthlyExpenses">Monthly Expenses</label>
+                                <input type="number" id="monthlyExpenses" name="monthlyExpenses" placeholder="₹20,000" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="existingLoans">Existing Loan EMIs (Monthly)</label>
+                                <input type="number" id="existingLoans" name="existingLoans" placeholder="₹0" min="0">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="bankAccount">Primary Bank Account *</label>
+                                <input type="text" id="bankAccount" name="bankAccount" placeholder="Bank Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="creditScore">Credit Score (if known)</label>
+                                <input type="number" id="creditScore" name="creditScore" min="300" max="850" placeholder="750">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Loan Details -->
+                    <div class="form-section" id="section4">
+                        <h2>Loan Details</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="preferredTerm">Preferred Loan Term *</label>
+                                <select id="preferredTerm" name="preferredTerm" required>
+                                    <option value="">Select Term</option>
+                                    <option value="6">6 months</option>
+                                    <option value="12">1 year (12 months)</option>
+                                    <option value="18">18 months</option>
+                                    <option value="24">2 years (24 months)</option>
+                                    <option value="36">3 years (36 months)</option>
+                                    <option value="48">4 years (48 months)</option>
+                                    <option value="60">5 years (60 months)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fundingSpeed">When do you need the funds? *</label>
+                                <select id="fundingSpeed" name="fundingSpeed" required>
+                                    <option value="">Select Timeline</option>
+                                    <option value="asap">As soon as possible</option>
+                                    <option value="1-week">Within 1 week</option>
+                                    <option value="2-weeks">Within 2 weeks</option>
+                                    <option value="1-month">Within 1 month</option>
+                                    <option value="flexible">I'm flexible</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="repaymentMethod">Preferred Repayment Method *</label>
+                                <select id="repaymentMethod" name="repaymentMethod" required>
+                                    <option value="">Select Method</option>
+                                    <option value="auto-debit">Auto-debit from bank account</option>
+                                    <option value="manual-transfer">Manual bank transfer</option>
+                                    <option value="check">Check payment</option>
+                                    <option value="online">Online payment</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="coApplicant">Do you have a co-applicant?</label>
+                                <select id="coApplicant" name="coApplicant">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="additionalInfo">Additional Information (Optional)</label>
+                            <textarea id="additionalInfo" name="additionalInfo" rows="3" placeholder="Any additional information you'd like to share about your application"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Review & Submit -->
+                    <div class="form-section" id="section5">
+                        <h2>Review & Submit</h2>
+                        <div class="terms-section">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                <label for="agreeTerms">I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> *</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="creditCheck" name="creditCheck" required>
+                                <label for="creditCheck">I authorize SecureBank to check my credit report *</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="marketingConsent" name="marketingConsent">
+                                <label for="marketingConsent">I'd like to receive updates about other SecureBank products and services</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simplified navigation with only submit button -->
+                    <div class="form-navigation">
+                        <button type="submit" class="btn-primary" id="submitBtn">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SecureBank</h3>
+                    <p>Your trusted financial partner</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="#">Checking Accounts</a></li>
+                        <li><a href="#">Savings Accounts</a></li>
+                        <li><a href="loans.html">Loans</a></li>
+                        <li><a href="#">Credit Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        // Show/hide other purpose field based on selection
+        document.getElementById('loanPurpose').addEventListener('change', function() {
+            const otherGroup = document.getElementById('otherPurposeGroup')
+            if (this.value === 'other') {
+                otherGroup.style.display = 'block'
+                document.getElementById('otherPurpose').required = true
+            } else {
+                otherGroup.style.display = 'none'
+                document.getElementById('otherPurpose').required = false
+            }
+        })
+
+        function formatIndianCurrency(amount) {
+            return new Intl.NumberFormat("en-IN").format(amount)
+        }
+
+        document.getElementById("personalLoanForm").addEventListener("submit", (e) => {
+            e.preventDefault()
+
+            // Validate all required fields
+            const requiredFields = document.querySelectorAll("[required]")
+            let isValid = true
+
+            requiredFields.forEach((field) => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = "#ef4444"
+                    isValid = false
+                } else {
+                    field.style.borderColor = "#d1d5db"
+                }
+            })
+
+            if (!isValid) {
+                alert("Please fill in all required fields before submitting.")
+                return
+            }
+
+            const agreeTerms = document.getElementById("agreeTerms").checked
+            const creditCheck = document.getElementById("creditCheck").checked
+
+            if (!agreeTerms || !creditCheck) {
+                alert("Please agree to the terms and conditions to proceed.")
+                return
+            }
+
+            alert(
+                "Thank you! Your personal loan application has been submitted successfully. You will receive a confirmation email shortly."
+            )
+
+            console.log("Personal loan form submitted successfully")
+        })
+    </script>
+</body>
+</html>

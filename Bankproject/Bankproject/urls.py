@@ -24,4 +24,11 @@ urlpatterns = [
     path('login/',views.userlogin,name="login"),
     path('logout/',views.userlogout,name="logout"),
     path('openacc/',views.openacc,name="openacc"),
+    path('loan/',views.loan,name="loan"),
+    path('personalloanapplication/',views.personalloanapplication,name="personalloanapplication"),
+    path('educationloanapplication/',views.educationloanapplication,name="educationloanapplication"),
+    path('homeloan/',views.homeloan,name="homeloan"),
+    path("loan/application/", views.home_loan_application, name="home_loan_application"),
 ]
+
+
