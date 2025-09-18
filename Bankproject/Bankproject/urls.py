@@ -23,6 +23,7 @@ urlpatterns = [
     path('signup/',views.signup,name="signup"),
     path('login/',views.userlogin,name="login"),
     path('logout/',views.userlogout,name="logout"),
+    path("open-account/", views.open_account, name="open-account"),
     path('openacc/',views.openacc,name="openacc"),
     path('account_dashboard/',views.account_dashboard,name="account_dashboard"),
     path('transfer/',views.transfer,name="transfer"),
