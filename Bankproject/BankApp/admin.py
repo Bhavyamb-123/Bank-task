@@ -4,3 +4,8 @@ from .models import *
 # Register your models here.
 admin.site.register(Profile)
 admin.site.register(AccountApplication)
+admin.site.register(Account)
+admin.site.register(Transaction)
+admin.site.register(CreditCardApplication)
+admin.site.register(DebitCardApplication)
+

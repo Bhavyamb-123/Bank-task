@@ -108,6 +108,30 @@
                 
                 <div class="form-section">
                     <h3>Choose Your Account Type</h3>
+            <div class="progress-bar">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <span>Account Type</span>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <span>Personal Info</span>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <span>Verification</span>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <span>Review</span>
+                </div>
+            </div>
+
+            <form class="account-form" id="accountForm">
+                
+                <!-- Step 1: Account Type Selection -->
+                <div class="form-step active" id="step1">
+                    <h2>Choose Your Account Type</h2>
                     <div class="account-types">
                         <div class="account-type-card">
                             <input type="radio" id="checking" name="accountType" value="checking" required>

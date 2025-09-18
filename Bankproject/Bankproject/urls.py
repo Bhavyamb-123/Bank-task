@@ -24,4 +24,14 @@ urlpatterns = [
     path('login/',views.userlogin,name="login"),
     path('logout/',views.userlogout,name="logout"),
     path("open-account/", views.open_account, name="open-account"),
+    path('openacc/',views.openacc,name="openacc"),
+    path('account_dashboard/',views.account_dashboard,name="account_dashboard"),
+    path('transfer/',views.transfer,name="transfer"),
+     # Credit Card
+    path("creditcard/", views.credit_card_page, name="creditcard"),
+    path("apply-creditcard/", views.apply_creditcard, name="apply_creditcard"),
+
+    # Debit Card
+    path("debitcard/", views.debit_card_page, name="debitcard"),
+    path("apply-debitcard/", views.apply_debitcard, name="apply_debitcard"),
 ]
