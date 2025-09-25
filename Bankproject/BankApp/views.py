@@ -125,3 +125,26 @@ def open_account(request):
     return render(request, "openacc.html")
 
 
+# ===== DEBIT CARD =====
+def debit_card_page(request):
+    return render(request, "debitcard.html")
+
+
+def apply_debitcard(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        email = request.POST.get("email")
+        account_number = request.POST.get("account_number")
+        cardType = request.POST.get("cardType")
+
+        DebitCardApplication.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            fullname=fullname,
+            email=email,
+            account_number=account_number,
+            cardType=cardType,
+        )
+        messages.success(request, "✅ Your debit card application has been submitted successfully!")
+        return redirect("debitcard")
+        #print
+    return render( request, "debitcard.html")
