@@ -1,31 +1,35 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .models import*
-from django.http import HttpResponseRedirect,JsonResponse
+from django.db.models import Sum
+from .models import *
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-
-
+from django.http import JsonResponse
+from django.contrib import messages
+from decimal import Decimal
+from decimal import Decimal, InvalidOperation
+from django.db import transaction, DatabaseError
+from django.utils.timezone import now
+from .models import CreditCardApplication, DebitCardApplication
 
 
 # Home Page
 def homepage(request):
-    return render(request,'home.html')
+    return render(request, 'home.html')
+
 
 def openacc(request):
-    return render(request,'openacc.html') 
+    return render(request, 'openacc.html')
 
-users = User.objects.all()
-# for u in users:
-#     if u.username != "admin":
-#         u.delete()
+
 # Signup View
 def signup(request):
     msg = ""
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
-        print("------------",password)
         firstname = request.POST.get("firstname")
         lastname = request.POST.get("lastname")
         number = request.POST.get("number")
@@ -36,14 +40,12 @@ def signup(request):
             msg = "User with this email already exists."
             return render(request, 'home.html', {'msg': msg})
 
-        # Create User
-        user = User.objects.create(username=email, email=email, password=password)
-        user.set_password(password)
-        user.first_name = firstname
-        user.last_name = lastname
+        # ✅ Create User properly
+        user = User(username=email, email=email, first_name=firstname, last_name=lastname)
+        user.set_password(password)  # important for login to work
         user.save()
 
-        # Create Profile
+        # ✅ Create Profile
         Profile.objects.create(
             user=user,
             Firstname=firstname,
@@ -53,37 +55,207 @@ def signup(request):
             Pin=pin,
         )
 
-        # Automatically log in the user
+        # ✅ Create Account (auto account_number is generated in model)
+        Account.objects.create(user=user, balance=0.00)
+
+        # ✅ Automatically log in the user
         login(request, user)
         return redirect("homepage")
 
     return render(request, 'home.html', {'msg': msg})
 
+
 # Login View
 def userlogin(request):
-    msg = ""
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        print(email,password)
+
         # Authenticate user
         user = authenticate(username=email, password=password)
-        print(user)
         if user is not None:
-            print("----------------")
             login(request, user)
-            return HttpResponseRedirect(reverse('homepage'))
+            return redirect('homepage')
         else:
-            msg = "Invalid login credentials"
-    
+            messages.error(request, "❌ Invalid login credentials")
+            return redirect('homepage')
 
-    return HttpResponseRedirect(reverse('homepage'))
+    return redirect('homepage')
+
 
 # Logout View
 def userlogout(request):
     logout(request)
-    return HttpResponseRedirect(reverse("homepage"))
+    return redirect("homepage")
 
+
+# Account Dashboard
+def account_dashboard(request):
+    try:
+        account = Account.objects.get(user=request.user)
+    except Account.DoesNotExist:
+        messages.error(request, "❌ No account found. Please create one.")
+        return redirect("homepage")
+
+    # This month start
+    start_month = now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+    # Credits & Debits this month
+    total_credits = Transaction.objects.filter(
+        account=account,
+        transaction_type="credit",
+        timestamp__gte=start_month
+    ).aggregate(total=Sum("amount"))["total"] or 0
+
+    total_debits = Transaction.objects.filter(
+        account=account,
+        transaction_type="debit",
+        timestamp__gte=start_month
+    ).aggregate(total=Sum("amount"))["total"] or 0
+
+    # Recent transactions (last 10, newest first)
+    transactions = Transaction.objects.filter(account=account).order_by("-timestamp")[:10]
+
+    return render(request, "account.html", {
+        "account": account,
+        "total_credits": total_credits,
+        "total_debits": total_debits,
+        "transactions": transactions,
+    })
+
+
+# Money Transfer
+def transfer(request):
+    if request.method == "POST":
+        recipient_acc_no = request.POST.get("recipient_account")
+        description = request.POST.get("description", "")
+        entered_pin = request.POST.get("pin")
+
+        # ✅ Validate amount
+        try:
+            amount = Decimal(request.POST.get("amount"))
+            if amount <= 0:
+                messages.error(request, "❌ Amount must be greater than 0.")
+                return redirect("account_dashboard")
+        except (InvalidOperation, TypeError):
+            messages.error(request, "❌ Invalid amount entered.")
+            return redirect("account_dashboard")
+
+        # ✅ Get sender details
+        sender_account = Account.objects.get(user=request.user)
+        sender_profile = Profile.objects.get(user=request.user)
+
+        # ✅ PIN check
+        if str(sender_profile.Pin) != str(entered_pin):
+            messages.error(request, "❌ Invalid PIN. Transfer cancelled.")
+            return redirect("account_dashboard")
+
+        # ✅ Recipient check
+        try:
+            recipient_account = Account.objects.get(account_number=recipient_acc_no)
+        except Account.DoesNotExist:
+            messages.error(request, "❌ Recipient account not found.")
+            return redirect("account_dashboard")
+
+# transfer money in same account 
+      
+        if recipient_account==sender_account:
+            messages.error(request,"❌ cannot transfer money to your own account.")
+            return redirect("account_dashboard")
+        # ✅ Balance check
+        if sender_account.balance < amount:
+            messages.error(request, "❌ Insufficient balance.")
+            return redirect("account_dashboard")
+
+        # ✅ Perform transaction safely
+        try:
+            with transaction.atomic():
+                # Save MoneyTransfer record
+                MoneyTransfer.objects.create(
+                    sender=sender_account,
+                    recipient=recipient_account,
+                    amount=amount,
+                    description=description
+                )
+
+                # Record sender transaction (debit)
+                Transaction.objects.create(
+                    account=sender_account,
+                    transaction_type="debit",
+                    amount=amount,
+                    description=f"{amount} debited (Transfer)"
+                )
+
+                # Record recipient transaction (credit)
+                Transaction.objects.create(
+                    account=recipient_account,
+                    transaction_type="credit",
+                    amount=amount,
+                    description=f"{amount} credited (Transfer)"
+                )
+
+                # Update balances
+                sender_account.balance -= amount
+                recipient_account.balance += amount
+                sender_account.save()
+                recipient_account.save()
+
+        except DatabaseError as db_err:
+            messages.error(request, f"❌ Database error: {str(db_err)}")
+            return redirect("account_dashboard")
+        except Exception as e:
+            messages.error(request, f"❌ Transfer failed: {str(e)}")
+            return redirect("account_dashboard")
+
+        # ✅ Success
+        messages.success(request, f"✅ ₹{amount} transferred successfully!")
+        return redirect("account_dashboard")
+    # ===== CREDIT CARD =====
+def credit_card_page(request):
+    return render(request, "creditcard.html")
+
+
+def apply_creditcard(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        email = request.POST.get("email")
+        income = request.POST.get("income")
+        cardType = request.POST.get("cardType")
+
+        CreditCardApplication.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            fullname=fullname,
+            email=email,
+            income=income,
+            cardType=cardType,
+        )
+        messages.success(request, "✅ Your credit card application has been submitted successfully!")
+        return redirect("creditcard")
+    return redirect("creditcard")
+
+
+# ===== DEBIT CARD =====
+def debit_card_page(request):
+    return render(request, "debitcard.html")
+
+
+def apply_debitcard(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        email = request.POST.get("email")
+        account_number = request.POST.get("account_number")
+        cardType = request.POST.get("cardType")
+
+        DebitCardApplication.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            fullname=fullname,
+            email=email,
+            account_number=account_number,
+            cardType=cardType,
+        )
+        messages.success(request, "✅ Your debit card application has been submitted successfully!")
+        return redirect("debitcard")
+    return redirect("debitcard")
 
 
 def open_account(request):
@@ -123,28 +295,3 @@ def open_account(request):
 
     # For GET requests → show the account opening page
     return render(request, "openacc.html")
-
-
-# ===== DEBIT CARD =====
-def debit_card_page(request):
-    return render(request, "debitcard.html")
-
-
-def apply_debitcard(request):
-    if request.method == "POST":
-        fullname = request.POST.get("fullname")
-        email = request.POST.get("email")
-        account_number = request.POST.get("account_number")
-        cardType = request.POST.get("cardType")
-
-        DebitCardApplication.objects.create(
-            user=request.user if request.user.is_authenticated else None,
-            fullname=fullname,
-            email=email,
-            account_number=account_number,
-            cardType=cardType,
-        )
-        messages.success(request, "✅ Your debit card application has been submitted successfully!")
-        return redirect("debitcard")
-        #print
-    return render( request, "debitcard.html")

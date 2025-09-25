@@ -68,10 +68,9 @@ class AccountApplication(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.first_name} {self.last_name} - {self.account_type}"
         return f"{self.user.first_name} Profile"
-
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
