@@ -255,4 +255,5 @@ def apply_debitcard(request):
         )
         messages.success(request, "✅ Your debit card application has been submitted successfully!")
         return redirect("debitcard")
+        #print
     return render( request, "debitcard.html")
