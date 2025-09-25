@@ -1,119 +1,146 @@
-let currentStep = 1;
-const totalSteps = 4;
-let selectedAccountType = '';
+// Authentication state management
+let isLoggedIn = false
+let currentUser = null
 
-// Initialize form
-document.addEventListener('DOMContentLoaded', function() {
-    // Account type selection
-    const accountCards = document.querySelectorAll('.account-type-card');
-    accountCards.forEach(card => {
-        card.addEventListener('click', function() {
-            accountCards.forEach(c => c.classList.remove('selected'));
-            this.classList.add('selected');
-            selectedAccountType = this.dataset.type;
-        });
-    });
-
-    // Form submission
-    document.getElementById('accountForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Application submitted successfully! We will review your application and contact you within 2-3 business days.');
-    });
-
-    updateFormDisplay();
-});
-
-function changeStep(direction) {
-    if (direction === 1 && currentStep < totalSteps) {
-        if (validateCurrentStep()) {
-            currentStep++;
-            updateFormDisplay();
-            updateReviewData();
-        }
-    } else if (direction === -1 && currentStep > 1) {
-        currentStep--;
-        updateFormDisplay();
-    }
+function showLogin() {
+  // Simulate login process
+  const email = prompt("Enter your email:")
+  if (email) {
+    login(email)
+  }
 }
 
-function validateCurrentStep() {
-    switch(currentStep) {
-        case 1:
-            if (!selectedAccountType) {
-                alert('Please select an account type.');
-                return false;
-            }
-            break;
-        case 2:
-            const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'dateOfBirth', 'ssn', 'address', 'city', 'state', 'zipCode', 'employment', 'income'];
-            for (let field of requiredFields) {
-                const element = document.getElementById(field);
-                if (!element.value.trim()) {
-                    alert(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()} field.`);
-                    element.focus();
-                    return false;
-                }
-            }
-            break;
-        case 3:
-            const securityQ1 = document.getElementById('securityQuestion1');
-            const securityQ2 = document.getElementById('securityQuestion2');
-            if (!securityQ1.value.trim() || !securityQ2.value.trim()) {
-                alert('Please answer both security questions.');
-                return false;
-            }
-            break;
-        case 4:
-            const agreeTerms = document.getElementById('agreeTerms');
-            if (!agreeTerms.checked) {
-                alert('Please agree to the Terms and Conditions to continue.');
-                return false;
-            }
-            break;
-    }
-    return true;
+function showSignUp() {
+  // Simulate signup process
+  const email = prompt("Enter your email to sign up:")
+  if (email) {
+    login(email)
+  }
 }
 
-function updateFormDisplay() {
-    // Hide all steps
-    document.querySelectorAll('.form-step').forEach(step => {
-        step.classList.remove('active');
-    });
-    
-    // Show current step
-    document.getElementById(`step${currentStep}`).classList.add('active');
-    
-    // Update progress bar
-    document.querySelectorAll('.progress-step').forEach((step, index) => {
-        step.classList.remove('active', 'completed');
-        if (index + 1 === currentStep) {
-            step.classList.add('active');
-        } else if (index + 1 < currentStep) {
-            step.classList.add('completed');
-        }
-    });
-    
-    // Update navigation buttons
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    
-    prevBtn.style.display = currentStep === 1 ? 'none' : 'inline-block';
-    nextBtn.style.display = currentStep === totalSteps ? 'none' : 'inline-block';
-    submitBtn.style.display = currentStep === totalSteps ? 'inline-block' : 'none';
+function login(email) {
+  isLoggedIn = true
+  currentUser = email
+  updateAuthDisplay()
 }
 
-function updateReviewData() {
-    if (currentStep === 4) {
-        // Update account type
-        document.getElementById('reviewAccountType').textContent = 
-            selectedAccountType === 'checking' ? 'Checking Account' : 'Savings Account';
-        
-        // Update personal info
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        document.getElementById('reviewName').textContent = `${firstName} ${lastName}`;
-        document.getElementById('reviewEmail').textContent = document.getElementById('email').value;
-        document.getElementById('reviewPhone').textContent = document.getElementById('phone').value;
+function logout() {
+  isLoggedIn = false
+  currentUser = null
+  updateAuthDisplay()
+}
+
+function updateAuthDisplay() {
+  const authButtons = document.getElementById("auth-buttons")
+  const userInfo = document.getElementById("user-info")
+  const usernameDisplay = document.getElementById("username-display")
+
+  if (isLoggedIn && currentUser) {
+    authButtons.style.display = "none"
+    userInfo.style.display = "flex"
+    usernameDisplay.textContent = `Hi, ${currentUser}`
+  } else {
+    authButtons.style.display = "flex"
+    userInfo.style.display = "none"
+  }
+}
+
+// Form management
+function showAccountForm() {
+  document.getElementById("account-form").style.display = "flex"
+  document.body.style.overflow = "hidden"
+}
+
+function hideAccountForm() {
+  document.getElementById("account-form").style.display = "none"
+  document.body.style.overflow = "auto"
+}
+
+// Initialize page when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Form submission
+  document.getElementById("accountOpeningForm").addEventListener("submit", async function (e) {
+    e.preventDefault()
+
+    // Basic form validation
+    const requiredFields = this.querySelectorAll("[required]")
+    let isValid = true
+
+    requiredFields.forEach((field) => {
+      if (!field.value.trim()) {
+        isValid = false
+        field.style.borderColor = "#ef4444"
+      } else {
+        field.style.borderColor = "#d1d5db"
+      }
+    })
+
+    if (!isValid) {
+      alert("Please fill in all required fields.")
+      return
     }
+
+    let formData = new FormData(this)
+
+    try {
+      const response = await fetch("/open-account/", {
+        method: "POST",
+        body: formData,
+        headers: {
+          "X-CSRFToken": getCSRFToken(),          // ✅ Needed for Django CSRF
+          "X-Requested-With": "XMLHttpRequest"   // ✅ So Django knows it's AJAX
+        },
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        alert(result.message)
+        hideAccountForm()
+        this.reset()
+      } else {
+        alert("Error: " + result.message)
+      }
+    } catch (error) {
+      alert("Something went wrong. Please try again.")
+      console.error(error)
+    }
+  })
+
+  // File upload handling
+  document.getElementById("documentUpload").addEventListener("change", (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const uploadPlaceholder = document.querySelector(".upload-placeholder")
+      uploadPlaceholder.innerHTML = `
+                <div class="upload-icon">✅</div>
+                <p>Document uploaded: ${file.name}</p>
+                <button type="button" class="btn-secondary" onclick="document.getElementById('documentUpload').click();">Change File</button>
+            `
+    }
+  })
+
+  // Close form when clicking outside
+  document.getElementById("account-form").addEventListener("click", function (e) {
+    if (e.target === this) {
+      hideAccountForm()
+    }
+  })
+
+  // Initialize authentication display
+  updateAuthDisplay()
+})
+
+// CSRF token extractor
+function getCSRFToken() {
+  let csrfToken = null
+  const cookies = document.cookie.split(";")
+  for (let cookie of cookies) {
+    let c = cookie.trim()
+    if (c.startsWith("csrftoken=")) {
+      csrfToken = c.substring("csrftoken=".length, c.length)
+      break
+    }
+  }
+  return csrfToken
 }
