@@ -244,7 +244,7 @@ def apply_debitcard(request):
         fullname = request.POST.get("fullname")
         email = request.POST.get("email")
         account_number = request.POST.get("account_number")
-        cardType = request.POST.get("cardType")
+        cardType = request.POST.get("cardType")!
 
         DebitCardApplication.objects.create(
             user=request.user if request.user.is_authenticated else None,
